@@ -5,7 +5,7 @@ plugins {
 }
 
 group = 'com.sh'
-version = '0.0.1-SNAPSHOT'
+version = '1.0.0'
 
 java {
 	toolchain {
@@ -18,15 +18,28 @@ repositories {
 }
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+	implementation 'org.springframework.boot:spring-boot-starter:3.3.4'
+	implementation 'org.springframework.boot:spring-boot-starter-web:3.3.2'
+
+	testImplementation 'org.springframework.boot:spring-boot-starter-test:3.3.4'
+	testImplementation 'io.rest-assured:rest-assured:5.5.0'
+	testImplementation 'org.mockito:mockito-junit-jupiter:2.23.0'
+	testImplementation 'org.junit.jupiter:junit-jupiter:5.9.2'
+	testRuntimeOnly 'org.junit.platform:junit-platform-launcher:1.10.2'
+
+	testImplementation('org.springframework.boot:spring-boot-starter-test:3.3.4') {
+		exclude group: 'junit' // junit4 자동 포함됨, junit5 사용 중이므로 제외
+	}
+
+	compileOnly 'org.projectlombok:lombok:1.18.30'
+	annotationProcessor 'org.projectlombok:lombok:1.18.30'
 
 	// Youtube API
-	implementation 'com.google.api-client:google-api-client:1.33.0'
-	implementation 'com.google.oauth-client:google-oauth-client-jetty:1.23.0'
-	implementation 'com.google.apis:google-api-services-youtube:v3-rev20230816-2.0.0'
-	implementation 'com.google.http-client:google-http-client-jackson2:1.39.2'
+	implementation 'com.google.apis:google-api-services-youtube:v3-rev222-1.25.0'
+
+//	implementation 'com.google.api-client:google-api-client:1.33.0'
+//	implementation 'com.google.oauth-client:google-oauth-client-jetty:1.23.0'
+//	implementation 'com.google.http-client:google-http-client-jackson2:1.39.2'
 }
 
 tasks.named('test') {
