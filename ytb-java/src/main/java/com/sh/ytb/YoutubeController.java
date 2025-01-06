@@ -1,5 +1,7 @@
 package com.sh.ytb;
 
+import com.google.api.services.youtube.model.SearchResult;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,9 +17,17 @@ class YoutubeController {
   private final YoutubeService youtubeService;
 
   @GetMapping
-  ResponseEntity<?> hello() {
+  ResponseEntity<String> hello() {
     String msg = youtubeService.sayHello();
 
     return ResponseEntity.status(HttpStatus.OK).body(msg);
+  }
+
+  @GetMapping("/video/mostPopular")
+  ResponseEntity<List<SearchResult>> getMostPopularVideos() {
+
+    List<SearchResult> results = youtubeService.mostPopularVideosGet();
+
+    return ResponseEntity.status(HttpStatus.OK).body(results);
   }
 }

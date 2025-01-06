@@ -36,4 +36,16 @@ class ApplicationTests {
     Assertions.assertEquals(response.statusCode(), HttpStatus.OK.value());
     Assertions.assertEquals(response.body().asString(), expectedMsg);
   }
+
+  @Test
+  void shouldReturnTop10PopularMusicVideos_WhenApiKeyIsValid() {
+
+    final ExtractableResponse<Response> response = RestAssured.given().log().all()
+        .contentType(MediaType.APPLICATION_JSON_VALUE)
+        .when().get("/youtube/video/mostPopular").then().log().all().extract();
+
+    Assertions.assertEquals(response.statusCode(), HttpStatus.OK.value());
+
+    System.out.println(response.body().asString());
+  }
 }
