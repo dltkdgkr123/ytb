@@ -8,6 +8,7 @@ import com.google.api.services.youtube.model.SearchListResponse;
 import com.google.api.services.youtube.model.SearchResult;
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +18,7 @@ public class YoutubeService {
 
   private final CredentialProperties credentialProperties;
   private final VideoProperties videoProperties;
+  private final OAuthHelper oAuthHelper;
 
   String sayHello() {
     System.out.println("hello server");
@@ -24,7 +26,7 @@ public class YoutubeService {
     return "hello client";
   }
 
-  List<SearchResult> mostPopularVideosGet() {
+  Optional<List<SearchResult>> mostPopularVideosGet() {
 
     JsonFactory jsonFactory = new JacksonFactory();
     NetHttpTransport netHttpTransport = new NetHttpTransport();
@@ -48,12 +50,24 @@ public class YoutubeService {
 
       SearchListResponse searchResponse = search.execute();
 
-      return searchResponse.getItems();
+      return Optional.of(searchResponse.getItems());
 
     } catch (IOException e) {
       e.printStackTrace();
     }
 
-    return null;
+    return Optional.empty();
+  }
+
+  Optional<String> authorizationUriGet() {
+
+    try {
+      String uri = oAuthHelper.authorizationUriGet();
+      return Optional.of(uri);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+
+    return Optional.empty();
   }
 }
