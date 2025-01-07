@@ -6,6 +6,7 @@ import io.restassured.response.Response;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.web.server.LocalServerPort;
@@ -76,5 +77,13 @@ class ApplicationTests {
   void shouldGenerateValidCredentialObj_WhenStoredCredentialVaild() throws Exception {
 
     // StoredCredential가 유효할 때, 이를 기반으로 만들어져 사용 될 Credential 객체 검증 필요
+  }
+
+  @Autowired
+  OAuthHelper oAuthHelper;
+
+  @Test
+  void test() throws Exception {
+    oAuthHelper.hi();
   }
 }
