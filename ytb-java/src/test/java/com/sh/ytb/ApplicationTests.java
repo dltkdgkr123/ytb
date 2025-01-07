@@ -84,6 +84,6 @@ class ApplicationTests {
 
   @Test
   void test() throws Exception {
-    oAuthHelper.hi();
+    oAuthHelper.loadCredentialObjFromStoredCredential();
   }
 }
