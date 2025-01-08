@@ -30,6 +30,7 @@ public class OAuthHelperTests {
     RestAssured.port = port;
   }
 
+  /* TODO: "URI가 비어있지 않다" 보다 신빙성있는 검증 필요 */
   @Test
   void OAuthHelper_shouldGenerateValidAuthUri() {
 
@@ -37,26 +38,24 @@ public class OAuthHelperTests {
         .contentType(MediaType.APPLICATION_JSON_VALUE)
         .when().get("/youtube/auth").then().log().all().extract();
 
-    String uri = response.body().toString();
+    String uri = response.body().asString();
 
-    // [uri가 비어있지 않다]로는 유효성 검증 미흡 - 수정 필요
     boolean success = !uri.isEmpty();
 
     Assertions.assertEquals(HttpStatus.OK.value(), response.statusCode());
     Assertions.assertTrue(success);
   }
 
+  /** TODO : 구현 필요 */
   @Test
   void OAuthHelper_shouldStoreValidCredentialInCredentialsDir_WhenAuthCodeValid() {
 
-    // 사용자 인증 이후, ../tokens/StoredCredential 경로의 binary 파일에 저장된 Credential 검증 필요
   }
 
+  /** TODO : 구현 필요 */
   @Test
   void OAuthHelper_shouldGenerateValidCredentialObj_WhenStoredCredentialVaild() throws Exception {
 
     oAuthHelper.loadCredentialObjFromStoredCredential();
-
-    // StoredCredential가 유효할 때, 이를 기반으로 만들어져 사용 될 Credential 객체 검증 필요
   }
 }

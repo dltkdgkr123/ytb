@@ -7,8 +7,8 @@ import com.google.api.services.youtube.YouTube;
 import com.google.api.services.youtube.model.SearchListResponse;
 import com.google.api.services.youtube.model.SearchResult;
 import java.io.IOException;
+import java.security.GeneralSecurityException;
 import java.util.List;
-import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -20,13 +20,8 @@ public class YoutubeService {
   private final VideoProperties videoProperties;
   private final OAuthHelper oAuthHelper;
 
-  String sayHello() {
-    System.out.println("hello server");
-
-    return "hello client";
-  }
-
-  Optional<List<SearchResult>> mostPopularVideosGet() {
+  /** FIXME : 프젝 볼륨 커지면 삭제 */
+  List<SearchResult> mostPopularVideosGet() throws IOException {
 
     JsonFactory jsonFactory = new JacksonFactory();
     NetHttpTransport netHttpTransport = new NetHttpTransport();
@@ -39,35 +34,21 @@ public class YoutubeService {
         .setApplicationName(videoProperties.getApplicationName())
         .build();
 
-    try {
-      YouTube.Search.List search = youtube.search().list("id, snippet");
-      search.setKey(credentialProperties.apiKey);
-      search.setType("video");
-      search.setRegionCode("KR");
-      search.setOrder("viewCount");
-      search.setMaxResults(videoProperties.getMaxResults());
-      search.setQ(videoProperties.getQuery());
+    YouTube.Search.List search = youtube.search().list("id, snippet");
+    search.setKey(credentialProperties.apiKey);
+    search.setType("video");
+    search.setRegionCode("KR");
+    search.setOrder("viewCount");
+    search.setMaxResults(videoProperties.getMaxResults());
+    search.setQ(videoProperties.getQuery());
 
-      SearchListResponse searchResponse = search.execute();
+    SearchListResponse searchResponse = search.execute();
 
-      return Optional.of(searchResponse.getItems());
-
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
-
-    return Optional.empty();
+    return searchResponse.getItems();
   }
 
-  Optional<String> authorizationUriGet() {
+  String authorizationUriGet() throws GeneralSecurityException, IOException {
 
-    try {
-      String uri = oAuthHelper.authorizationUriGet();
-      return Optional.of(uri);
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
-
-    return Optional.empty();
+    return oAuthHelper.authorizationUriGet();
   }
 }

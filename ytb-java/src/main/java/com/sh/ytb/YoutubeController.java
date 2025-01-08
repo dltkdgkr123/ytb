@@ -1,8 +1,9 @@
 package com.sh.ytb;
 
 import com.google.api.services.youtube.model.SearchResult;
+import java.io.IOException;
+import java.security.GeneralSecurityException;
 import java.util.List;
-import java.util.NoSuchElementException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,27 +18,19 @@ class YoutubeController {
 
   private final YoutubeService youtubeService;
 
-  @GetMapping
-  ResponseEntity<String> hello() {
-    String msg = youtubeService.sayHello();
-
-    return ResponseEntity.status(HttpStatus.OK).body(msg);
-  }
-
+  /** FIXME : 프젝 볼륨 커지면 삭제 */
   @GetMapping("/video/mostPopular")
-  ResponseEntity<List<SearchResult>> getMostPopularVideos() {
+  ResponseEntity<List<SearchResult>> getMostPopularVideos() throws IOException {
 
-    List<SearchResult> results = youtubeService.mostPopularVideosGet()
-        .orElseThrow(NoSuchElementException::new);
+    List<SearchResult> results = youtubeService.mostPopularVideosGet();
 
     return ResponseEntity.status(HttpStatus.OK).body(results);
   }
 
   @GetMapping("/auth")
-  ResponseEntity<String> getAuthorizationUri() {
+  ResponseEntity<String> getAuthorizationUri() throws GeneralSecurityException, IOException {
 
-    String uri = youtubeService.authorizationUriGet()
-        .orElseThrow(NoSuchElementException::new);
+    String uri = youtubeService.authorizationUriGet();
 
     return ResponseEntity.status(HttpStatus.OK).body(uri);
   }

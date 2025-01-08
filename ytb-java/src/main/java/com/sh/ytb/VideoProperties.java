@@ -3,6 +3,7 @@ package com.sh.ytb;
 import lombok.Getter;
 import org.springframework.stereotype.Component;
 
+/** FIXME : 프젝 볼륨 커지면 삭제 */
 @Component
 @Getter
 public class VideoProperties {

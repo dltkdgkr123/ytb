@@ -25,18 +25,8 @@ public class ApplicationLayerIntegrationTests {
     RestAssured.port = port;
   }
 
-  @Test
-  void shouldReturnCorrectHttpStatusAndResponse() {
-    String expectedMsg = "hello client";
 
-    final ExtractableResponse<Response> response = RestAssured.given().log().all()
-        .contentType(MediaType.APPLICATION_JSON_VALUE)
-        .when().get("/youtube").then().log().all().extract();
-
-    Assertions.assertEquals(HttpStatus.OK.value(), response.statusCode());
-    Assertions.assertEquals(expectedMsg, response.body().asString());
-  }
-
+  /** FIXME : 프젝 볼륨 커지면 삭제 */
   @Test
   void shouldReturnTop10PopularMusicVideos_WhenApiKeyIsValid() {
 
@@ -46,6 +36,5 @@ public class ApplicationLayerIntegrationTests {
 
     Assertions.assertEquals(HttpStatus.OK.value(), response.statusCode());
 
-    // 직렬화하고 던져서 테스트에서 아직 컨텐츠는 컨디션 파악하기 애매함
   }
 }
