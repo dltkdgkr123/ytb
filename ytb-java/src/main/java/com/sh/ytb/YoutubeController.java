@@ -18,7 +18,7 @@ class YoutubeController {
 
   private final YoutubeService youtubeService;
 
-  /** FIXME : 프젝 볼륨 커지면 삭제 */
+  /* FIXME : 프젝 볼륨 커지면 삭제 */
   @GetMapping("/video/mostPopular")
   ResponseEntity<List<SearchResult>> getMostPopularVideos() throws IOException {
 

@@ -20,7 +20,7 @@ public class YoutubeService {
   private final VideoProperties videoProperties;
   private final OAuthHelper oAuthHelper;
 
-  /** FIXME : 프젝 볼륨 커지면 삭제 */
+  /* FIXME : 프젝 볼륨 커지면 삭제 */
   List<SearchResult> mostPopularVideosGet() throws IOException {
 
     JsonFactory jsonFactory = new JacksonFactory();
@@ -49,6 +49,6 @@ public class YoutubeService {
 
   String authorizationUriGet() throws GeneralSecurityException, IOException {
 
-    return oAuthHelper.authorizationUriGet();
+    return oAuthHelper.getAuthorizationUri();
   }
 }

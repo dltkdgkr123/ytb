@@ -1,10 +1,13 @@
 package com.sh.ytb;
 
+import com.google.api.client.auth.oauth2.BearerToken;
+import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.auth.oauth2.StoredCredential;
 import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
 import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeRequestUrl;
 import com.google.api.client.googleapis.auth.oauth2.GoogleClientSecrets;
 import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
+import com.google.api.client.http.GenericUrl;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.client.util.store.FileDataStoreFactory;
 import com.sh.ytb.exception.CredentialNotFoundException;
@@ -21,27 +24,23 @@ import org.springframework.stereotype.Component;
 @Component
 public class OAuthHelper {
 
-  /* FIXME: 프로퍼티화 필요 */
-  /**
-   * <p>Client ID, Secret 포함 JSON 파일 - Google 입장에서 Client인 My Server를 의미
-   */
+  /* FIXME: static 변수들 프로퍼티 객체화 필요 */
+
+  /* Client ID, Secret 포함 JSON 파일 - Google 입장에서 Client인 My Server를 의미 */
   private static final String CLIENT_SECRET_FILE = "client_secret.json";
   private static final String CREDENTIALS_FILE = "StoredCredential";
   private static final String CREDENTIALS_DIRECTORY_PATH = "credentials";
-  /**
-   * <p>OS따라 경로 구분자(이스케이프 문자)가 다를 수 있으므로, 하드 코딩 하지 말라고 함
-   */
+  private static final String TOKEN_SERVER_URL = "https://oauth2.googleapis.com/token";
+
+  /* OS 종류에 따라 경로 구분자가 다를 수 있으므로, 이스케이프 문자 하드 코딩 하지 말라고 함 */
   private static final String CREDENTIALS_FILE_PATH =
       CREDENTIALS_DIRECTORY_PATH + File.separator + CREDENTIALS_FILE;
 
-  /**
-   * <p>구글로부터 인가받을 사용자 계정 접근 가능 범위 지정
-   *
-   * <p>본 프로젝트에선 사용자의 Youtube Playlist CRUD 동작을 할 수 있어야 하므로, readonly 외에도 force-ssl 권한 필요
-   *
-   * <p> force-ssl는 민감한 권한 범위로 분류되므로, 프로덕션 모드 전환시 인증 절차가 다소 까다롭다고 함
-   *
-   * <p> 현재 테스트 모드이므로, 최대 100명의 미리 지정한 사용자만 이용 가능
+  /*
+   * 글로부터 인가받을 사용자 계정 접근 가능 범위 지정
+   * 본 프로젝트에선 사용자의 Youtube Playlist CRUD 동작을 할 수 있어야 하므로, readonly 외에도 force-ssl 권한 필요
+   * force-ssl는 민감한 권한 범위로 분류되므로, 프로덕션 모드 전환시 인증 절차가 다소 까다롭다고 함
+   * 현재 테스트 모드이므로, 최대 100명의 미리 지정한 사용자만 이용 가능
    */
   private static final List<String> SCOPES = Arrays.asList(
       "https://www.googleapis.com/auth/youtube.readonly",
@@ -54,7 +53,7 @@ public class OAuthHelper {
    * @author sh
    * @since 1.0
    */
-  public GoogleAuthorizationCodeFlow getAuthorizationFlow()
+  public GoogleAuthorizationCodeFlow generateAuthorizationFlow()
       throws IOException, GeneralSecurityException {
 
     GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(
@@ -91,26 +90,26 @@ public class OAuthHelper {
    * @author sh
    * @since 1.0
    */
-  public String authorizationUriGet() throws GeneralSecurityException, IOException {
+  public String getAuthorizationUri() throws GeneralSecurityException, IOException {
     return
-        getAuthorizationFlow()
+        generateAuthorizationFlow()
             .newAuthorizationUrl()
             .setRedirectUri("http://localhost:8080/oauth2callback")
             .build();
   }
 
+  /* NOTE: GoogleCredential은 Deprecate 예정이므로 StoredCredential 사용 */
   /**
    * <p>사용자 인증 성공 이후, 구글에 의해 자동 생성된
-   * StoredCredential 바이너리 파일로부터 {@link StoredCredential} 생성
+   * StoredCredential 바이너리 파일로부터 {@link StoredCredential} 로드
    *
-   * <p>GoogleCredential은 Deprecate 예정이므로 {@link StoredCredential} 사용
-   *
-   * @return {@link StoredCredential} 객체
-   * @throws IOException 입력/출력 관련 오류 발생 시 (절대 경로 포함하여 로깅)
+   * @return 중간 객체 역할을 하는 {@link StoredCredential} 객체
+   * @throws IOException                 입력/출력 관련 오류 발생 시
+   * @throws CredentialNotFoundException 파싱을 시도했을 때 자격 증명이 존재하지 않을 시 (절대 경로 포함하여 로깅)
    * @author sh
    * @since 1.0
    */
-  public StoredCredential loadCredentialObjFromStoredCredential() throws IOException {
+  public StoredCredential loadStoredCredential() throws IOException {
 
     File filePath = new File(CREDENTIALS_FILE_PATH);
     FileDataStoreFactory dataStoreFactory = new FileDataStoreFactory(filePath.getParentFile());
@@ -122,7 +121,30 @@ public class OAuthHelper {
                     .getDataStore(CREDENTIALS_FILE)
                     .get("user"))
             .orElseThrow(
-                () -> CredentialNotFoundException.fromAbsoluteFilePath(filePath.getAbsolutePath())
-            );
+                () -> CredentialNotFoundException.fromAbsoluteFilePath(filePath.getAbsolutePath()));
+  }
+
+  /* OPTION: 구글에서 지원하는 dataStore 인터페이스 활용해서 [파일/메모리/스토리지] 시스템 기반 토큰 저장 가능 */
+
+  /**
+   * <p>{@link StoredCredential} 객체를 실제 Youtube API 요청에 쓰일 {@link Credential}로 변환
+   *
+   * @return 구글의 AccessToken, RefreshToken을 포함하는 {@link Credential} 객체
+   * @author sh
+   * @since 1.0
+   */
+  public Credential convertToCredential(StoredCredential storedCredential)
+      throws GeneralSecurityException, IOException {
+
+    return
+        new Credential.Builder(BearerToken.authorizationHeaderAccessMethod())
+            .setTransport(GoogleNetHttpTransport.newTrustedTransport())
+            .setJsonFactory(JacksonFactory.getDefaultInstance())
+            .setTokenServerUrl(new GenericUrl(TOKEN_SERVER_URL))
+            .build()
+
+            .setAccessToken(storedCredential.getAccessToken())
+            .setRefreshToken(storedCredential.getRefreshToken())
+            .setExpirationTimeMilliseconds(storedCredential.getExpirationTimeMilliseconds());
   }
 }

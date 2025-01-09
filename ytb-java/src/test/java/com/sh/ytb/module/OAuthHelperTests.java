@@ -17,7 +17,7 @@ import org.springframework.test.context.TestPropertySource;
 
 @SpringBootTest(webEnvironment = WebEnvironment.DEFINED_PORT)
 @TestPropertySource(locations = "file:src/main/resources/application.properties")
-public class OAuthHelperTests {
+class OAuthHelperTests {
 
   @LocalServerPort
   private int port;
@@ -30,7 +30,7 @@ public class OAuthHelperTests {
     RestAssured.port = port;
   }
 
-  /* TODO: "URI가 비어있지 않다" 보다 신빙성있는 검증 필요 */
+  /* FIXME: "URI가 비어있지 않다" 보다 신빙성있는 검증 필요 */
   @Test
   void OAuthHelper_shouldGenerateValidAuthUri() {
 
@@ -46,16 +46,16 @@ public class OAuthHelperTests {
     Assertions.assertTrue(success);
   }
 
-  /** TODO : 구현 필요 */
+  /* TODO : 구현 필요 */
   @Test
   void OAuthHelper_shouldStoreValidCredentialInCredentialsDir_WhenAuthCodeValid() {
 
   }
 
-  /** TODO : 구현 필요 */
+  /* TODO : 구현 필요 */
   @Test
   void OAuthHelper_shouldGenerateValidCredentialObj_WhenStoredCredentialVaild() throws Exception {
 
-    oAuthHelper.loadCredentialObjFromStoredCredential();
+    oAuthHelper.loadStoredCredential();
   }
 }

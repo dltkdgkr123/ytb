@@ -15,7 +15,7 @@ import org.springframework.test.context.TestPropertySource;
 
 @SpringBootTest(webEnvironment = WebEnvironment.DEFINED_PORT)
 @TestPropertySource(locations = "file:src/main/resources/application.properties")
-public class ApplicationLayerIntegrationTests {
+class ApplicationLayerIntegrationTests {
 
   @LocalServerPort
   private int port;
@@ -26,7 +26,7 @@ public class ApplicationLayerIntegrationTests {
   }
 
 
-  /** FIXME : 프젝 볼륨 커지면 삭제 */
+  /* FIXME : 프젝 볼륨 커지면 삭제 */
   @Test
   void shouldReturnTop10PopularMusicVideos_WhenApiKeyIsValid() {
 
