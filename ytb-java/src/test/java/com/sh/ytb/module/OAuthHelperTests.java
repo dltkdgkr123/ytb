@@ -1,6 +1,5 @@
 package com.sh.ytb.module;
 
-import com.google.api.client.auth.oauth2.Credential;
 import com.sh.ytb.adapter.OAuthHelper;
 import io.restassured.RestAssured;
 import io.restassured.response.ExtractableResponse;
