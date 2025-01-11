@@ -56,12 +56,11 @@ public class OAuthHelper {
   public GoogleAuthorizationCodeFlow generateAuthorizationFlow()
       throws IOException, GeneralSecurityException {
 
-    GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(
-        JacksonFactory.getDefaultInstance(),
-        new InputStreamReader(
-            Objects.requireNonNull(
-                OAuthHelper.class.getClassLoader().getResourceAsStream(CLIENT_SECRET_FILE)))
-    );
+    GoogleClientSecrets clientSecrets =
+        GoogleClientSecrets.load(
+            JacksonFactory.getDefaultInstance(),
+            new InputStreamReader(Objects.requireNonNull(
+                OAuthHelper.class.getClassLoader().getResourceAsStream(CLIENT_SECRET_FILE))));
 
     return
         new GoogleAuthorizationCodeFlow.Builder(
@@ -70,8 +69,7 @@ public class OAuthHelper {
             clientSecrets,
             SCOPES
         )
-            .setDataStoreFactory(
-                new FileDataStoreFactory(new File(CREDENTIALS_DIRECTORY_PATH)))
+            .setDataStoreFactory(new FileDataStoreFactory(new File(CREDENTIALS_DIRECTORY_PATH)))
             .setAccessType("offline") // 리프레시 토큰을 받을 수 있게 설정
             .build();
   }
@@ -91,6 +89,7 @@ public class OAuthHelper {
    * @since 1.0
    */
   public String getAuthorizationUri() throws GeneralSecurityException, IOException {
+
     return
         generateAuthorizationFlow()
             .newAuthorizationUrl()
@@ -99,6 +98,7 @@ public class OAuthHelper {
   }
 
   /* NOTE: GoogleCredential은 Deprecate 예정이므로 StoredCredential 사용 */
+
   /**
    * <p>사용자 인증 성공 이후, 구글에 의해 자동 생성된
    * StoredCredential 바이너리 파일로부터 {@link StoredCredential} 로드
@@ -140,7 +140,10 @@ public class OAuthHelper {
         new Credential.Builder(BearerToken.authorizationHeaderAccessMethod())
             .setTransport(GoogleNetHttpTransport.newTrustedTransport())
             .setJsonFactory(JacksonFactory.getDefaultInstance())
+            /* OPTION: .setTokenServerEncodedUrl() */
             .setTokenServerUrl(new GenericUrl(TOKEN_SERVER_URL))
+            /* FIXME: flow 재생성하여 사용 중 - id 및 secret 파싱하여 쓰거나 flow 휘발하지 않고 쓰는 방법 고려 */
+            .setClientAuthentication(generateAuthorizationFlow().getClientAuthentication())
             .build()
 
             .setAccessToken(storedCredential.getAccessToken())
