@@ -1,14 +1,7 @@
 package com.sh.ytb.service;
 
-import com.google.api.client.http.javanet.NetHttpTransport;
-import com.google.api.client.json.JsonFactory;
-import com.google.api.client.json.jackson2.JacksonFactory;
-import com.google.api.services.youtube.YouTube;
-import com.google.api.services.youtube.model.SearchListResponse;
 import com.google.api.services.youtube.model.SearchResult;
-import com.sh.ytb.adapter.OAuthHelper;
-import com.sh.ytb.properties.CredentialProperties;
-import com.sh.ytb.properties.VideoProperties;
+import com.sh.ytb.adapter.YoutubeHelper;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.util.List;
@@ -19,39 +12,10 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class YoutubeService {
 
-  private final CredentialProperties credentialProperties;
-  private final VideoProperties videoProperties;
-  private final OAuthHelper oAuthHelper;
+  private final YoutubeHelper youtubeHelper;
 
-  /* FIXME : 프젝 볼륨 커지면 삭제 */
-  public List<SearchResult> mostPopularVideosGet() throws IOException {
+  public List<SearchResult> mostPopularVideosGet() throws IOException, GeneralSecurityException {
 
-    JsonFactory jsonFactory = new JacksonFactory();
-    NetHttpTransport netHttpTransport = new NetHttpTransport();
-
-    YouTube youtube = new YouTube.Builder(
-        netHttpTransport,
-        jsonFactory,
-        request -> {
-        })
-        .setApplicationName(videoProperties.getApplicationName())
-        .build();
-
-    YouTube.Search.List search = youtube.search().list("id, snippet");
-    search.setKey(credentialProperties.getApiKey());
-    search.setType("video");
-    search.setRegionCode("KR");
-    search.setOrder("viewCount");
-    search.setMaxResults(videoProperties.getMaxResults());
-    search.setQ(videoProperties.getQuery());
-
-    SearchListResponse searchResponse = search.execute();
-
-    return searchResponse.getItems();
-  }
-
-  public String authorizationUriGet() throws GeneralSecurityException, IOException {
-
-    return oAuthHelper.getAuthorizationUri();
+    return youtubeHelper.mostPopularVideosGet();
   }
 }

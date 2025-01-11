@@ -35,7 +35,7 @@ class OAuthHelperTests {
 
   /* FIXME: "URI가 비어있지 않다" 보다 신빙성있는 검증 필요 */
   @Test
-  void OAuthHelper_ShouldGenerateValidAuthUri() {
+  void shouldGenerateValidAuthUri() {
 
     final ExtractableResponse<Response> response = RestAssured.given().log().all()
         .contentType(MediaType.APPLICATION_JSON_VALUE)
@@ -51,7 +51,8 @@ class OAuthHelperTests {
 
   /* FIXME: 신빙성있는 검증 필요 */
   @Test
-  void OAuthHelper_ShouldStoreValidCredentialInCredentialsDir_WhenAuthCodeValid() {
+  void shouldStoreValidCredentialInCredentialsDir_whenAuthCodeValid() {
+
     final ExtractableResponse<Response> response = RestAssured.given().log().all()
         .contentType(MediaType.APPLICATION_JSON_VALUE)
         .when().get("/youtube/auth").then().log().all().extract();
@@ -66,17 +67,16 @@ class OAuthHelperTests {
 
   /* FIXME: 신빙성있는 검증 필요 */
   @Test
-  void OAuthHelper_ShouldGenerateValidStoredCredentialObj_WhenStoredCredentialVaild()
-      throws Exception {
+  void shouldGenerateValidStoredCredentialObj_whenStoredCredentialValid() throws Exception {
 
     oAuthHelper.loadStoredCredential();
   }
 
   /* FIXME: 신빙성있는 검증 필요 */
   @Test
-  void OAuthHelper_ShouldConvertToValidCredentialObj_WhenStoredCredentialObjVaild()
+  void shouldConvertToValidCredentialObj_whenStoredCredentialObjValid()
       throws IOException, GeneralSecurityException {
 
-    Credential credential = oAuthHelper.convertToCredential(oAuthHelper.loadStoredCredential());
+    oAuthHelper.convertToCredential(oAuthHelper.loadStoredCredential());
   }
 }

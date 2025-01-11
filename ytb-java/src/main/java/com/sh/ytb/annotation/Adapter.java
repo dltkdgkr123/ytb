@@ -8,10 +8,12 @@ import java.lang.annotation.Target;
 import org.springframework.core.annotation.AliasFor;
 import org.springframework.stereotype.Component;
 
-
-/* OPTION: 엄밀히 분류하면 Controller 또한 브라우저와 내 앱을 이어주는 Adapter 이다. (헥사고날 아키텍처에서 배운 내용)
- * 다만, 현재 디자인 패턴에서 이렇게 처리하면 배보다 배꼽이 더 커질것 같아서 일단 미포함
+/* OPTION: 클린 아키텍처를 쫓다가 배보다 배꼽이 더 커지는 사항
+ *
+ * 1.Controller 또한 브라우저와 내 앱을 이어주는 Adapter (헥사고날 아키텍처에서 배운 내용)
+ * 2. Adapter 끼울 port 레이어 구성 (현재 Service 바로 연결 중)
  */
+
 /**
  * <p> 외부 시스템(Colud, Storage, Open API, Frameworks..)과 WAS 를 연결하는 레이어에 적용
  *

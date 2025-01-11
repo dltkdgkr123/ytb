@@ -1,6 +1,7 @@
 package com.sh.ytb.controller;
 
 import com.google.api.services.youtube.model.SearchResult;
+import com.sh.ytb.service.OAuthService;
 import com.sh.ytb.service.YoutubeService;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
@@ -18,10 +19,12 @@ import org.springframework.web.bind.annotation.RestController;
 class YoutubeController {
 
   private final YoutubeService youtubeService;
+  private final OAuthService oAuthService;
 
   /* FIXME : 프젝 볼륨 커지면 삭제 */
   @GetMapping("/video/mostPopular")
-  ResponseEntity<List<SearchResult>> getMostPopularVideos() throws IOException {
+  ResponseEntity<List<SearchResult>> getMostPopularVideos()
+      throws IOException, GeneralSecurityException {
 
     List<SearchResult> results = youtubeService.mostPopularVideosGet();
 
@@ -31,7 +34,7 @@ class YoutubeController {
   @GetMapping("/auth")
   ResponseEntity<String> getAuthorizationUri() throws GeneralSecurityException, IOException {
 
-    String uri = youtubeService.authorizationUriGet();
+    String uri = oAuthService.authorizationUriGet();
 
     return ResponseEntity.status(HttpStatus.OK).body(uri);
   }
