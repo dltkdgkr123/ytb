@@ -1,4 +1,4 @@
-package com.sh.ytb;
+package com.sh.ytb.properties;
 
 import lombok.Getter;
 import org.springframework.stereotype.Component;

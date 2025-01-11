@@ -1,4 +1,4 @@
-package com.sh.ytb;
+package com.sh.ytb.service;
 
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.JsonFactory;
@@ -6,6 +6,9 @@ import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.services.youtube.YouTube;
 import com.google.api.services.youtube.model.SearchListResponse;
 import com.google.api.services.youtube.model.SearchResult;
+import com.sh.ytb.adapter.OAuthHelper;
+import com.sh.ytb.properties.CredentialProperties;
+import com.sh.ytb.properties.VideoProperties;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.util.List;
@@ -21,7 +24,7 @@ public class YoutubeService {
   private final OAuthHelper oAuthHelper;
 
   /* FIXME : 프젝 볼륨 커지면 삭제 */
-  List<SearchResult> mostPopularVideosGet() throws IOException {
+  public List<SearchResult> mostPopularVideosGet() throws IOException {
 
     JsonFactory jsonFactory = new JacksonFactory();
     NetHttpTransport netHttpTransport = new NetHttpTransport();
@@ -35,7 +38,7 @@ public class YoutubeService {
         .build();
 
     YouTube.Search.List search = youtube.search().list("id, snippet");
-    search.setKey(credentialProperties.apiKey);
+    search.setKey(credentialProperties.getApiKey());
     search.setType("video");
     search.setRegionCode("KR");
     search.setOrder("viewCount");
@@ -47,7 +50,7 @@ public class YoutubeService {
     return searchResponse.getItems();
   }
 
-  String authorizationUriGet() throws GeneralSecurityException, IOException {
+  public String authorizationUriGet() throws GeneralSecurityException, IOException {
 
     return oAuthHelper.getAuthorizationUri();
   }

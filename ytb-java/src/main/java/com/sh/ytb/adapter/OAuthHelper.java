@@ -1,4 +1,4 @@
-package com.sh.ytb;
+package com.sh.ytb.adapter;
 
 import com.google.api.client.auth.oauth2.BearerToken;
 import com.google.api.client.auth.oauth2.Credential;
@@ -10,6 +10,7 @@ import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
 import com.google.api.client.http.GenericUrl;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.client.util.store.FileDataStoreFactory;
+import com.sh.ytb.annotation.Adapter;
 import com.sh.ytb.exception.CredentialNotFoundException;
 import java.io.File;
 import java.io.IOException;
@@ -19,9 +20,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import org.springframework.stereotype.Component;
 
-@Component
+@Adapter
 public class OAuthHelper {
 
   /* FIXME: static 변수들 프로퍼티 객체화 필요 */

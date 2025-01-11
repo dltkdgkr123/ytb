@@ -1,6 +1,7 @@
-package com.sh.ytb;
+package com.sh.ytb.controller;
 
 import com.google.api.services.youtube.model.SearchResult;
+import com.sh.ytb.service.YoutubeService;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.util.List;
