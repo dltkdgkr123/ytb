@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
  * 다만, 현재 디자인 패턴에서 이렇게 처리하면 배보다 배꼽이 더 커질것 같아서 일단 미포함
  */
 /**
- * <p> 외부 시스템(Colud, Storage, Open API, Frameworks..)과 현재 웹서버를 연결하는 레이어에 적용
+ * <p> 외부 시스템(Colud, Storage, Open API, Frameworks..)과 WAS 를 연결하는 레이어에 적용
  *
  * @author sh
  * @since 1.0
