@@ -31,7 +31,8 @@ public class YoutubeHelper {
 
   private final CredentialProperties credentialProperties;
 
-  public List<Subscription> getSubscribedChannels(Credential credential) throws Exception {
+  public List<Subscription> getSubscribedChannels(Credential credential)
+      throws GeneralSecurityException, IOException {
 
     YouTube youtube = new YouTube.Builder(
         GoogleNetHttpTransport.newTrustedTransport(),
@@ -40,11 +41,12 @@ public class YoutubeHelper {
         .setApplicationName(subscribe_application_name)
         .build();
 
-    return youtube.subscriptions()
-        .list(subscribe_scope)
-        .setMine(subscribe_is_mine)
-        .setMaxResults(subscribe_max_results)
-        .execute().getItems();
+    return
+        youtube.subscriptions()
+            .list(subscribe_scope)
+            .setMine(subscribe_is_mine)
+            .setMaxResults(subscribe_max_results)
+            .execute().getItems();
   }
 
   /* FIXME : 프젝 볼륨 커지면 삭제 */
@@ -58,14 +60,15 @@ public class YoutubeHelper {
         .setApplicationName(video_application_name)
         .build();
 
-    return youtube.search()
-        .list(video_scope)
-        .setKey(credentialProperties.getApiKey())
-        .setType(video_type)
-        .setRegionCode(video_region_code)
-        .setOrder(video_order)
-        .setMaxResults(video_max_results)
-        .setQ(video_query)
-        .execute().getItems();
+    return
+        youtube.search()
+            .list(video_scope)
+            .setKey(credentialProperties.getApiKey())
+            .setType(video_type)
+            .setRegionCode(video_region_code)
+            .setOrder(video_order)
+            .setMaxResults(video_max_results)
+            .setQ(video_query)
+            .execute().getItems();
   }
 }

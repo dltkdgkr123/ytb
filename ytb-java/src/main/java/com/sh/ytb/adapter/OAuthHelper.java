@@ -112,14 +112,13 @@ public class OAuthHelper {
   public StoredCredential loadStoredCredential() throws IOException {
 
     File filePath = new File(CREDENTIALS_FILE_PATH);
-    FileDataStoreFactory dataStoreFactory = new FileDataStoreFactory(filePath.getParentFile());
 
     /* FIXME: 단일 유저 아닐 때 get("user") 동작 검증 필요 */
     return
-        Optional.ofNullable(
-                (StoredCredential) dataStoreFactory
-                    .getDataStore(CREDENTIALS_FILE)
-                    .get("user"))
+        Optional.ofNullable((StoredCredential) new FileDataStoreFactory(
+                new File(CREDENTIALS_FILE_PATH).getParentFile())
+                .getDataStore(CREDENTIALS_FILE)
+                .get("user"))
             .orElseThrow(
                 () -> CredentialNotFoundException.fromAbsoluteFilePath(filePath.getAbsolutePath()));
   }

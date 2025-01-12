@@ -1,9 +1,12 @@
 package com.sh.ytb.module;
 
 import com.sh.ytb.adapter.OAuthHelper;
+import com.sh.ytb.adapter.YoutubeHelper;
 import io.restassured.RestAssured;
 import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;
+import java.io.IOException;
+import java.security.GeneralSecurityException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -22,23 +25,35 @@ public class YoutubeApiTests {
   @LocalServerPort
   private int port;
 
-  @Autowired
-  OAuthHelper oAuthHelper;
-
   @BeforeEach
   void setUp() {
     RestAssured.port = port;
   }
 
+  @Autowired
+  YoutubeHelper youtubeHelper;
+
+  @Autowired
+  OAuthHelper oAuthHelper;
+
   /* FIXME : 프젝 볼륨 커지면 삭제 */
   @Test
-  void shouldReturnTop10PopularMusicVideos_WhenApiKeyIsValid() {
+  void shouldReturnTop10PopularMusicVideos_WhenApiKeyValid() {
 
     final ExtractableResponse<Response> response = RestAssured.given().log().all()
         .contentType(MediaType.APPLICATION_JSON_VALUE)
         .when().get("/youtube/video/mostPopular").then().log().all().extract();
 
     Assertions.assertEquals(HttpStatus.OK.value(), response.statusCode());
+  }
 
+  /* FIXME: 필요한 필드만 사용 - reources/doc/subscribeJsonFields.txt */
+  @Test
+  void shouldReturnSubscribedChannels_WhenCredentialValid()
+      throws IOException, GeneralSecurityException {
+    youtubeHelper.getSubscribedChannels(
+            oAuthHelper.convertToCredential(oAuthHelper.loadStoredCredential()))
+
+        .forEach(sub -> System.out.println(sub.getSnippet().getTitle()));
   }
 }

@@ -17,6 +17,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.TestPropertySource;
 
+
+/* FIXME: OAuth API 테스트와 mock 기반 테스트로 분리 */
 @SpringBootTest(webEnvironment = WebEnvironment.DEFINED_PORT)
 @TestPropertySource(locations = "file:src/main/resources/application.properties")
 class OAuthHelperTests {
