@@ -1,0 +1,16 @@
+!!! 싱글 모니터 이슈로 인한 IDEA 내의 tmp 메모장 !!!
+
+  // DTO 자체 고유 식별자
+  private String id;
+
+  private String title;
+
+  private String channelId;
+
+  /* OPTION: 해상도 default, medium, high 존재 (현재 medium 채택) */
+  private String thumbnailUrl;
+
+  /* OPTION: etag -> 리소스의 최신 상태 추적용 (활용해서 성능 개선 가능) */
+  private String etag;
+
+  private String publishedAt;
