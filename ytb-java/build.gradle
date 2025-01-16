@@ -20,6 +20,8 @@ repositories {
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter:3.3.4'
     implementation 'org.springframework.boot:spring-boot-starter-web:3.3.2'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa:3.2.5'  // 구현체 default : hibernate
+    implementation 'com.mysql:mysql-connector-j:9.1.0'
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test:3.3.4'
     testImplementation 'io.rest-assured:rest-assured:5.5.0'
@@ -41,10 +43,9 @@ dependencies {
     implementation 'com.google.http-client:google-http-client-jackson2:1.39.2'
 //    implementation 'com.google.oauth-client:google-oauth-client-jetty:1.23.0'
 
-
     // logger
-    implementation 'org.slf4j:slf4j-api:2.0.14'
-    implementation 'ch.qos.logback:logback-classic:1.5.6'
+//    implementation 'org.slf4j:slf4j-api:2.0.14'
+//    implementation 'ch.qos.logback:logback-core:1.5.13' // 1.5.12 버전 아래로 보안 취약성 존재 경고뜸
 }
 
 tasks.named('test') {

@@ -3,8 +3,8 @@
 TODO:
   - 선순위
     - 구현 어느정도 하고 트랜잭션 걸릴 단위 결정
-    -
-    -
+    - SubscribeDTO id 전부 null인거 수정
+    - Validator 구현
     -
     -
   - 후순위

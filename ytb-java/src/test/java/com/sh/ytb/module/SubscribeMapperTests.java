@@ -38,7 +38,7 @@ public class SubscribeMapperTests {
   @Test
   void shouldMapSubscriptionToSubscribeDTOCorrectly() throws IOException, GeneralSecurityException {
 
-    subscribeMapper.mapToDTO(
+    subscribeMapper.mapObjToJPAEntity(
             youtubeHelper.getSubscribedChannels(
                 oAuthHelper.convertToCredential(oAuthHelper.loadStoredCredential()))
         )
