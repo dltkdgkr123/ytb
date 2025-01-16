@@ -16,4 +16,11 @@ public class OAuthService {
 
     return oAuthHelper.getAuthorizationUri();
   }
+
+  public String credentialStore() {
+
+    // TODO: 세션 기반 유저 get 및 토큰 저장
+
+    return "";
+  }
 }

@@ -2,12 +2,14 @@
 
 TODO:
   - 선순위
-    - 구현 어느정도 하고 트랜잭션 걸릴 단위 결정
+    - 유저 세션 및 토큰 저장 구현
+    - StoredCredential에 key추가, 조회/저장/삭제 동작 구현
     - SubscribeDTO id 전부 null인거 수정
     - Validator 구현
     -
     -
   - 후순위
+    - 구현 어느정도 하고 트랜잭션 걸릴 단위 결정
     - GoogleNetHttpTransport, JacksonFactory 매 요청마다 새로 생성하는거 thread 관련 효율 고민
     - 한 번 인증 이후, 더 이상 인증 안하게하고 저장된 credential 이용
     - credential 만료 주기 찾고, 요청에 만료되면 token 재발급
