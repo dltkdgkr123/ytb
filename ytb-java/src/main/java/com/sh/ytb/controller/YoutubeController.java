@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 class YoutubeController {
 
   private final YoutubeService youtubeService;
+
   private final OAuthService oAuthService;
 
   /* FIXME : 프젝 볼륨 커지면 삭제 */

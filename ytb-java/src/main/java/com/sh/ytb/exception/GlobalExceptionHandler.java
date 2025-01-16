@@ -24,4 +24,14 @@ public class GlobalExceptionHandler {
   public ResponseEntity<String> handleIOException(IOException e) {
     return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
   }
+
+  @ExceptionHandler(UserNotExistException.class)
+  public ResponseEntity<String> handleUserNotExistException(UserNotExistException e) {
+    return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+  }
+
+  @ExceptionHandler(PasswordNotMatchException.class)
+  public ResponseEntity<String> handleUserNotExistException(PasswordNotMatchException e) {
+    return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+  }
 }
