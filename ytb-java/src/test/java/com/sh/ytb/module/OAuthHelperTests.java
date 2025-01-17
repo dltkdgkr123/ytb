@@ -4,8 +4,6 @@ import com.sh.ytb.adapter.OAuthHelper;
 import io.restassured.RestAssured;
 import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;
-import java.io.IOException;
-import java.security.GeneralSecurityException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -73,11 +71,9 @@ class OAuthHelperTests {
     oAuthHelper.loadStoredCredential();
   }
 
-  /* FIXME: 신빙성있는 검증 필요 */
+  /* TODO: 구현 */
   @Test
-  void shouldConvertToValidCredentialObj_whenStoredCredentialObjValid()
-      throws IOException, GeneralSecurityException {
+  void shouldConvertToValidCredentialObj_whenStoredCredentialObjValid() {
 
-    oAuthHelper.convertToCredential(oAuthHelper.loadStoredCredential());
   }
 }

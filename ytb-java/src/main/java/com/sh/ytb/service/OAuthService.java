@@ -1,9 +1,13 @@
 package com.sh.ytb.service;
 
+import com.google.api.client.auth.oauth2.StoredCredential;
 import com.sh.ytb.adapter.OAuthHelper;
+import com.sh.ytb.mapper.TokenMapper;
+import com.sh.ytb.repository.GoogleTokenRepository;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -11,16 +15,25 @@ import org.springframework.stereotype.Service;
 public class OAuthService {
 
   private final OAuthHelper oAuthHelper;
+  private final GoogleTokenRepository googleTokenRepository;
+  private final TokenMapper tokenMapper;
+  private final PasswordEncoder tokenEncoder;
+
 
   public String authorizationUriGet() throws GeneralSecurityException, IOException {
 
     return oAuthHelper.getAuthorizationUri();
   }
 
-  public String credentialStore() {
+  public boolean tokenStore() throws IOException {
 
-    // TODO: 세션 기반 유저 get 및 토큰 저장
+    StoredCredential storedCredential = oAuthHelper.loadStoredCredential();
 
-    return "";
+    googleTokenRepository.save(
+        tokenMapper.mapToGoogleTokenJPAEntity(
+            storedCredential.getAccessToken(),
+            storedCredential.getRefreshToken()));
+
+    return true;
   }
 }

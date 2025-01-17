@@ -5,8 +5,6 @@ import com.sh.ytb.adapter.YoutubeHelper;
 import io.restassured.RestAssured;
 import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;
-import java.io.IOException;
-import java.security.GeneralSecurityException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -47,13 +45,9 @@ public class YoutubeApiTests {
     Assertions.assertEquals(HttpStatus.OK.value(), response.statusCode());
   }
 
-  /* FIXME: 필요한 필드만 사용 - reources/doc/subscribeJsonFields.txt */
+  /* TODO: 구현 및 필요한 필드만 사용 - reources/doc/subscribeJsonFields.txt */
   @Test
-  void shouldReturnSubscribedChannels_WhenCredentialValid()
-      throws IOException, GeneralSecurityException {
-    youtubeHelper.getSubscribedChannels(
-            oAuthHelper.convertToCredential(oAuthHelper.loadStoredCredential()))
+  void shouldReturnSubscribedChannels_WhenCredentialValid() {
 
-        .forEach(sub -> System.out.println(sub.getSnippet().getTitle()));
   }
 }

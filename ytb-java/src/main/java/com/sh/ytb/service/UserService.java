@@ -1,11 +1,14 @@
 package com.sh.ytb.service;
 
-import com.sh.ytb.dto.UserLoginDTO;
-import com.sh.ytb.dto.UserRegistDTO;
+import com.sh.ytb.dto.UserSignInDTO;
+import com.sh.ytb.dto.UserSignUpDTO;
 import com.sh.ytb.entity.UserJPAEntity;
+import com.sh.ytb.exception.PasswordNotMatchException;
 import com.sh.ytb.exception.UserNotExistException;
 import com.sh.ytb.mapper.UserMapper;
 import com.sh.ytb.repository.UserRepository;
+import com.sh.ytb.util.SessionUtil;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -17,22 +20,32 @@ public class UserService {
   private final UserRepository userRepository;
   private final UserMapper userMapper;
   private final PasswordEncoder passwordEncoder;
+  private final SessionUtil sessionUtil;
 
-  public void userRegist(UserRegistDTO userRegistDTO) {
 
-    userRepository.save(userMapper.mapObjToDTO(userRegistDTO));
+  public void userSignUp(UserSignUpDTO userSignUpDTO) {
+
+    userRepository.save(userMapper.mapDTOToJPAEntity(userSignUpDTO));
   }
 
-  public void userLogin(UserLoginDTO userLoginDTO) {
+  public boolean userSignIn(UserSignInDTO userSignInDTO) {
 
     UserJPAEntity userJPAEntity =
-        userRepository.findByName(userLoginDTO.getName())
-            .orElseThrow(() -> new UserNotExistException(userLoginDTO.getName()));
+        userRepository.findByUserId(userSignInDTO.getUserId())
+            .orElseThrow(() -> new UserNotExistException(userSignInDTO.getUserId()));
 
-    boolean pwdMatched = passwordEncoder.matches(userLoginDTO.getPassword(),
+    boolean pwdMatched = passwordEncoder.matches(userSignInDTO.getPassword(),
         userJPAEntity.getPassword());
 
-    // TODO: 세션추가, 구글토큰 insert, return Entity
+    if (!pwdMatched) {
+      throw new PasswordNotMatchException(userSignInDTO.getUserId());
+    }
 
+    HttpSession session = sessionUtil.getSession();
+
+    // TODO: 쿠키 운용
+    session.setAttribute("id", userJPAEntity.getId());
+
+    return true;
   }
 }

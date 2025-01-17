@@ -10,6 +10,11 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
+  @ExceptionHandler(IllegalStateException.class)
+  public ResponseEntity<String> handleIllegalStateException(IllegalStateException e) {
+    return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+  }
+
   @ExceptionHandler(CredentialNotFoundException.class)
   public ResponseEntity<String> handleCredentialNotFoundException(CredentialNotFoundException e) {
     return new ResponseEntity<>(e.getMessage(), HttpStatus.UNAUTHORIZED);

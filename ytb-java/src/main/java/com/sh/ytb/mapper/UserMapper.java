@@ -1,6 +1,6 @@
 package com.sh.ytb.mapper;
 
-import com.sh.ytb.dto.UserRegistDTO;
+import com.sh.ytb.dto.UserSignUpDTO;
 import com.sh.ytb.entity.UserJPAEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -12,12 +12,13 @@ public class UserMapper {
 
   private PasswordEncoder passwordEncoder;
 
-  public UserJPAEntity mapObjToDTO(UserRegistDTO userRegistDTO) {
+  public UserJPAEntity mapDTOToJPAEntity(UserSignUpDTO userSignUpDTO) {
 
     return
         UserJPAEntity.builder()
-            .id(userRegistDTO.getName())
-            .password(passwordEncoder.encode(userRegistDTO.getPassword()))
+            .id(null) // TODO: 체크
+            .userId(userSignUpDTO.getUserId())
+            .password(passwordEncoder.encode(userSignUpDTO.getPassword()))
             .build();
   }
 }

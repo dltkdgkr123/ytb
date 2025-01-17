@@ -124,15 +124,20 @@ public class OAuthHelper {
   }
 
   /* OPTION: 구글에서 지원하는 dataStore 인터페이스 활용해서 [파일/메모리/스토리지] 시스템 기반 토큰 저장 가능 */
+  public String getAccessToken(StoredCredential storedCredential) {
 
-  /**
-   * <p>{@link StoredCredential} 객체를 실제 Youtube API 요청에 쓰일 {@link Credential}로 변환
-   *
-   * @return 구글의 AccessToken, RefreshToken을 포함하는 {@link Credential} 객체
-   * @author sh
-   * @since 1.0
-   */
-  public Credential convertToCredential(StoredCredential storedCredential)
+    return storedCredential.getAccessToken();
+  }
+
+  public String getRefreshToken(StoredCredential storedCredential) {
+
+    return storedCredential.getRefreshToken();
+  }
+
+  public Credential loadCredential(
+      String accessToken,
+      String refreshToken,
+      Long expirationTimeMillis)
       throws GeneralSecurityException, IOException {
 
     return
@@ -141,12 +146,11 @@ public class OAuthHelper {
             .setJsonFactory(JacksonFactory.getDefaultInstance())
             /* OPTION: .setTokenServerEncodedUrl() */
             .setTokenServerUrl(new GenericUrl(TOKEN_SERVER_URL))
-            /* FIXME: flow 재생성하여 사용 중 - id 및 secret 파싱하여 쓰거나 flow 휘발하지 않고 쓰는 방법 고려 */
             .setClientAuthentication(generateAuthorizationFlow().getClientAuthentication())
             .build()
 
-            .setAccessToken(storedCredential.getAccessToken())
-            .setRefreshToken(storedCredential.getRefreshToken())
-            .setExpirationTimeMilliseconds(storedCredential.getExpirationTimeMilliseconds());
+            .setAccessToken(accessToken)
+            .setRefreshToken(refreshToken)
+            .setExpirationTimeMilliseconds(expirationTimeMillis);
   }
 }

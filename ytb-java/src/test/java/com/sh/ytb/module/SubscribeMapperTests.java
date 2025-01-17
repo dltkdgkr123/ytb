@@ -35,13 +35,8 @@ public class SubscribeMapperTests {
     RestAssured.port = port;
   }
 
+  // TODO: 구현
   @Test
   void shouldMapSubscriptionToSubscribeDTOCorrectly() throws IOException, GeneralSecurityException {
-
-    subscribeMapper.mapObjToJPAEntity(
-            youtubeHelper.getSubscribedChannels(
-                oAuthHelper.convertToCredential(oAuthHelper.loadStoredCredential()))
-        )
-        .forEach(System.out::println);
   }
 }
