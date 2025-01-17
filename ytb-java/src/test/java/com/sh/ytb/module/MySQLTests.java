@@ -1,6 +1,8 @@
 package com.sh.ytb.module;
 
-import java.sql.Connection;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
 import java.sql.SQLException;
 import javax.sql.DataSource;
 import org.junit.jupiter.api.Test;
@@ -15,12 +17,9 @@ class MySQLTests {
 
   @Test
   public void testConnection() throws SQLException {
-    try (Connection connection = dataSource.getConnection()) {
-      System.out.println("MySQL 연결 성공: " + connection.isValid(2));
-    } catch (Exception e) {
-      System.out.println("MySQL 연결 실패: " + e.getMessage());
-      throw e;
-    }
+
+    assertDoesNotThrow(() -> Exception.class);
+    assertNotNull(dataSource.getConnection());
   }
 }
 

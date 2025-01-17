@@ -37,7 +37,7 @@ public class UserTests {
         .build();
 
     // When
-    boolean success = userService.userLogin(userSignInDTO);
+    boolean success = userService.userSignIn(userSignInDTO);
 
     // Then
     assertTrue(success);
@@ -54,7 +54,7 @@ public class UserTests {
 
     // When & Then
     assertThrows(PasswordNotMatchException.class, () -> {
-      userService.userLogin(userSignInDTO);
+      userService.userSignIn(userSignInDTO);
     });
   }
 
@@ -69,7 +69,7 @@ public class UserTests {
 
     // When & Then
     assertThrows(UserNotExistException.class, () -> {
-      userService.userLogin(userSignInDTO);
+      userService.userSignIn(userSignInDTO);
     });
   }
 }
