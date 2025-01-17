@@ -18,7 +18,7 @@ import org.springframework.test.context.TestPropertySource;
 
 @SpringBootTest(webEnvironment = WebEnvironment.DEFINED_PORT)
 @TestPropertySource(locations = "file:src/main/resources/application.properties")
-public class YoutubeApiTests {
+class YoutubeApiTests {
 
   @LocalServerPort
   private int port;

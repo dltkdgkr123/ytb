@@ -16,10 +16,10 @@ import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.jdbc.Sql;
 
 @SpringBootTest
-@Sql("/UserTest.sql")
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @TestPropertySource(locations = "file:src/main/resources/application.properties")
-public class UserTests {
+@Sql("/UserTest.sql")
+class UserTests {
 
   @Autowired
   private UserService userService;
