@@ -7,10 +7,11 @@ import com.sh.ytb.exception.PasswordNotMatchException;
 import com.sh.ytb.exception.UserNotExistException;
 import com.sh.ytb.mapper.UserMapper;
 import com.sh.ytb.repository.UserRepository;
-import com.sh.ytb.util.HttpRequestUtil;
+import com.sh.ytb.util.HttpRequestUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -19,14 +20,14 @@ public class UserService {
   private final UserRepository userRepository;
   private final UserMapper userMapper;
   private final PasswordEncoder passwordEncoder;
-  private final HttpRequestUtil httpRequestUtil;
-
+  private final HttpRequestUtils httpRequestUtils;
 
   public void userSignUp(UserSignUpDTO userSignUpDTO) {
 
     userRepository.save(userMapper.mapDTOToJPAEntity(userSignUpDTO));
   }
 
+  @Transactional
   public boolean userSignIn(UserSignInDTO userSignInDTO) {
 
     UserJPAEntity userJPAEntity =
@@ -40,11 +41,7 @@ public class UserService {
       throw new PasswordNotMatchException(userSignInDTO.getUserId());
     }
 
-
-    // TODO: 쿠키 운용
-//    HttpSession session = httpRequestUtil.getSession();
-//    session.setAttribute("id", );
-
+    // TODO: 구현
     return true;
   }
 }

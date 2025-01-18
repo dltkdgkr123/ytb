@@ -19,7 +19,7 @@ import com.google.api.services.youtube.YouTube;
 import com.google.api.services.youtube.model.SearchResult;
 import com.google.api.services.youtube.model.Subscription;
 import com.sh.ytb.annotation.Adapter;
-import com.sh.ytb.properties.CredentialProperties;
+import com.sh.ytb.properties.secret.CredentialProperties;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.util.List;
