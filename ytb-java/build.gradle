@@ -13,8 +13,22 @@ java {
     }
 }
 
+jar {
+    sourceSets {
+        main {
+            java {
+                exclude '**/inactive/**'
+            }
+        }
+    }
+}
+
 repositories {
     mavenCentral()
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
 }
 
 dependencies {
@@ -52,8 +66,4 @@ dependencies {
     // logger
 //    implementation 'org.slf4j:slf4j-api:2.0.14'
 //    implementation 'ch.qos.logback:logback-core:1.5.13' // 1.5.12 버전 아래로 보안 취약성 존재 경고뜸
-}
-
-tasks.named('test') {
-    useJUnitPlatform()
 }

@@ -7,8 +7,6 @@ import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 import org.springframework.context.annotation.Profile;
 
-/* FIXME: Spring Session이 지혼자 다해서 필요가 없는 것같음 */
-@Deprecated
 @Profile("archive")
 public class AESKeyGenerator {
 

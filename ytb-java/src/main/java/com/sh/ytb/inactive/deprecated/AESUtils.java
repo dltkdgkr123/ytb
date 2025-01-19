@@ -1,4 +1,4 @@
-package com.sh.ytb.util;
+package com.sh.ytb.inactive.deprecated;
 
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
@@ -8,9 +8,12 @@ import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
+import org.springframework.context.annotation.Profile;
+import org.springframework.stereotype.Component;
 
-/* FIXME: Spring Session이 지혼자 다해서 필요가 없는 것같음 */
+@Profile("deprecated")
 @Deprecated
+@Component
 public class AESUtils {
 
   public String encrypt(String data, SecretKey key)

@@ -1,0 +1,41 @@
+Spring Session with Redis
+ref => https://docs.spring.io/spring-session/reference/
+
+1. HttpSession 커스텀
+- Spring Boot Configuration으로 springSessionRepositoryFilter를 구현
+- springSessionRepositoryFilter 빈은 HttpSession를 사용자 정의 빈으로 대체하는 역할
+
+2. HttpSession 동작
+- Tomcat을 사용하는 대신 Redis에 값을 저장한다.
+- HttpSession 인터페이스를 Redis에서 지원하는 구현으로 대체한다.
+- 새로운 HttpSession이 생성되면 Spring Session은 브라우저에 "SESSION" key를 가진 쿠키를 생성한다.
+- 쿠키는 Session ID를 포함하고 있으며, Chrome 또는 Firefox에서 해당 쿠키를 조회할 수 있다.
+
+3. Filter가 작동하려면,
+- Spring이 Config class를 로드해야 한다. (@EnableRedisHttpSession)
+- 서블릿 컨테이너(Tomcat)가 모든 요청에 대해 springSessionRepositoryFilter를 사용하도록 해야 한다. (Initializer 상속 기반)
+- 스프링 부트의 자동 설정으로도 사용 가능(spring.session.store-type=.. )
+
+4. Spring Security 통합
+
+4-1. 동시 세션 제어를 지원하기 위해 Spring Security와 통합 지원
+e.g.) 단일 사용자가 동시에 가질 수 있는 활성 세션 수를 제한
+- 기본 Spring Security과 달리 클러스터 환경에서도 작동
+- SessionRegistry 인터페이스의 사용자 정의 구현을 제공하여 수행
+
+4-2. Spring Security의 Remember-me Authentication와 통합
+- Remember-me 쿠키 기반 인증
+- 사용자가 웹사이트를 재방문할 때마다 로그인하지 않아도 됨
+
+5. SessionRepository 선택 (with Redis)
+
+5-1. RedisSessionRepository:
+- 추가 인덱싱 없이 Redis에 세션 데이터를 저장하는 기본 구현
+- 세션 ID가 아닌 속성이나 기준에 따라 세션을 쿼리하는 것은 비효율적
+- 스프링 부트의 자동 설정으로도 사용 가능 (spring.session.store-type=redis)
+
+5-2. RedisIndexedSessionRepository:
+- 인덱싱 기능을 제공하는 확장된 구현 (성능 향상 및 고급 세션 관리 목적)
+- 사용자 ID 또는 마지막 액세스 시간과 같은 세션 속성을 기반으로 인덱스를 생성할 수 있음
+- 세션 만료 및 삭제도 지원
+- 스프링 부트의 자동 설정으로도 사용 가능 (spring.session.store-type=indexed)

@@ -45,7 +45,7 @@ class YoutubeApiTests {
     Assertions.assertEquals(HttpStatus.OK.value(), response.statusCode());
   }
 
-  /* TODO: 구현 및 필요한 필드만 사용 - reources/doc/subscribeJsonFields.txt */
+  /* TODO: 구현 및 필요한 필드만 사용 - reources/doc/SubscribeJsonFields.txt */
   @Test
   void shouldReturnSubscribedChannels_WhenCredentialValid() {
 
