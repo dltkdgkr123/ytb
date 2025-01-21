@@ -1,8 +1,8 @@
 package com.sh.ytb.mapper;
 
-import com.sh.ytb.dto.GoogleTokenDTO;
+import com.sh.ytb.dto.res.GoogleTokenResDTO;
 import com.sh.ytb.entity.GoogleTokenJPAEntity;
-import com.sh.ytb.specs.impl.AESCipher;
+import com.sh.ytb.properties.OAuthProperties;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -10,24 +10,21 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class TokenMapper {
 
-  private AESCipher aesCipher;
-
   public GoogleTokenJPAEntity mapGoogleTokenToJPAEntity(String accessToken, String refreshToken) {
 
     return
         GoogleTokenJPAEntity.builder()
-            .accessToken(aesCipher.encrypt(accessToken))
-            .refreshToken(aesCipher.encrypt(refreshToken))
+            .accessToken(accessToken)
+            .refreshToken(refreshToken)
             .build();
   }
 
-  public GoogleTokenDTO mapJPAEntityToDTO(GoogleTokenJPAEntity googleTokenJPAEntity) {
+  public GoogleTokenResDTO mapGoogleTokenToDTO(String accessToken, String refreshToken) {
 
-    /* encoding 된 상태임 */
     return
-        GoogleTokenDTO.builder()
-            .accessToken(googleTokenJPAEntity.getAccessToken())
-            .refreshToken(googleTokenJPAEntity.getRefreshToken())
+        GoogleTokenResDTO.builder()
+            .accessToken(accessToken)
+            .refreshToken(refreshToken)
             .build();
   }
 }

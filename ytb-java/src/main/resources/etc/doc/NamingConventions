@@ -1,0 +1,10 @@
+.java
+1. 기본 컨벤션은 intellij-java-google-style.xml를 따른다.
+
+{properties\secret\..Properties}.java
+1. 카멜 케이스로 작성한다.
+
+{properties\..Properties}.java
+1. domain name과 property name을 혼합하여 작성한다.
+2. 소문자 + 스네이크 케이스를 작성한다. (또한, "squid:S115" 경고를 무시한다.)
+

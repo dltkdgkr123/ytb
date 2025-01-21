@@ -1,4 +1,4 @@
-package com.sh.ytb.dto;
+package com.sh.ytb.dto.req;
 
 import lombok.Builder;
 import lombok.Getter;

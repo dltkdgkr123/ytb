@@ -1,7 +1,7 @@
 package com.sh.ytb.controller;
 
-import com.sh.ytb.dto.GoogleTokenDTO;
-import com.sh.ytb.dto.TokenLoadReqDTO;
+import com.sh.ytb.dto.res.GoogleTokenResDTO;
+import com.sh.ytb.dto.req.GoogleTokenLoadReqDTO;
 import com.sh.ytb.service.OAuthService;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
@@ -20,13 +20,13 @@ public class OAuthController {
   private final OAuthService oAuthService;
 
   @GetMapping("/load-google-token")
-  ResponseEntity<GoogleTokenDTO> loadGoogleToken(@RequestBody TokenLoadReqDTO tokenLoadReqDTO) {
+  ResponseEntity<GoogleTokenResDTO> loadGoogleToken(@RequestBody GoogleTokenLoadReqDTO googleTokenLoadReqDTO) {
 
     // TODO: 본인 맞는지 검증 절차
-    Optional<GoogleTokenDTO> result = oAuthService.tokenLoad(tokenLoadReqDTO);
+    Optional<GoogleTokenResDTO> result = oAuthService.decryptedTokenLoad(googleTokenLoadReqDTO);
 
     return result
-        .map(googleTokenDTO -> ResponseEntity.status(HttpStatus.OK).body(googleTokenDTO))
+        .map(googleTokenResDTO -> ResponseEntity.status(HttpStatus.OK).body(googleTokenResDTO))
         .orElseGet(() -> ResponseEntity.status(HttpStatus.FORBIDDEN).build());
   }
 }

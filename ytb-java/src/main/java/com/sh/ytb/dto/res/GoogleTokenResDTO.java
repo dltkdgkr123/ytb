@@ -1,4 +1,4 @@
-package com.sh.ytb.dto;
+package com.sh.ytb.dto.res;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -9,7 +9,7 @@ import lombok.ToString;
 @Setter
 @ToString
 @Builder
-public class GoogleTokenDTO {
+public class GoogleTokenResDTO {
 
   private String accessToken;
 

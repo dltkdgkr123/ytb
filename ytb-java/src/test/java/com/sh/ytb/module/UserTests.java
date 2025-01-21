@@ -3,7 +3,7 @@ package com.sh.ytb.module;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import com.sh.ytb.dto.UserSignInReqDTO;
+import com.sh.ytb.dto.req.UserSignInReqDTO;
 import com.sh.ytb.exception.PasswordNotMatchException;
 import com.sh.ytb.exception.UserNotExistException;
 import com.sh.ytb.service.UserService;

@@ -3,12 +3,11 @@ package com.sh.ytb.module;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import com.sh.ytb.controller.UserController;
-import com.sh.ytb.dto.UserSignInReqDTO;
+import com.sh.ytb.dto.req.UserSignInReqDTO;
 import com.sh.ytb.service.UserService;
 import io.restassured.RestAssured;
 import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

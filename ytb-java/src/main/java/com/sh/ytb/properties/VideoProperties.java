@@ -4,7 +4,11 @@ import org.springframework.stereotype.Component;
 
 /* FIXME : 프젝 볼륨 커지면 삭제 */
 @Component
+@SuppressWarnings("squid:S115")
 public class VideoProperties {
+
+  private VideoProperties() {
+  }
 
   public static final String video_application_name = "TopVideos";
   public static final Long video_max_results = 10L;

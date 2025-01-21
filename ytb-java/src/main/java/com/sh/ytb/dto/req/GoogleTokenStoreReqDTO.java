@@ -1,4 +1,4 @@
-package com.sh.ytb.dto;
+package com.sh.ytb.dto.req;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -9,7 +9,7 @@ import lombok.ToString;
 @Setter
 @ToString
 @Builder
-public class TokenLoadReqDTO {
+public class GoogleTokenStoreReqDTO {
 
   private String userId;
 }

@@ -1,6 +1,6 @@
 package com.sh.ytb.mapper;
 
-import com.sh.ytb.dto.UserSignUpReqDTO;
+import com.sh.ytb.dto.req.UserSignUpReqDTO;
 import com.sh.ytb.entity.UserJPAEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;

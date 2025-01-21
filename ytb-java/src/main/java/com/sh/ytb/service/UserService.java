@@ -1,12 +1,13 @@
 package com.sh.ytb.service;
 
-import com.sh.ytb.dto.UserSignInReqDTO;
-import com.sh.ytb.dto.UserSignUpReqDTO;
+import com.sh.ytb.dto.req.UserSignInReqDTO;
+import com.sh.ytb.dto.req.UserSignUpReqDTO;
 import com.sh.ytb.entity.UserJPAEntity;
 import com.sh.ytb.exception.PasswordNotMatchException;
 import com.sh.ytb.exception.UserNotExistException;
 import com.sh.ytb.mapper.UserMapper;
 import com.sh.ytb.repository.UserRepository;
+import java.io.IOException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserService {
 
   private final UserRepository userRepository;
+  private final OAuthService oAuthService;
   private final UserMapper userMapper;
   private final PasswordEncoder passwordEncoder;
 
@@ -26,7 +28,7 @@ public class UserService {
   }
 
   @Transactional
-  public boolean userSignIn(UserSignInReqDTO userSignInReqDTO) {
+  public boolean userSignIn(UserSignInReqDTO userSignInReqDTO) throws IOException {
 
     UserJPAEntity userJPAEntity =
         userRepository.findByUserId(userSignInReqDTO.getUserId())
@@ -38,6 +40,12 @@ public class UserService {
     if (!pwdMatched) {
       throw new PasswordNotMatchException(userSignInReqDTO.getUserId());
     }
+
+    // 플로우 생각
+
+    // 조되는 토큰이 없으면? 만들러가세용
+
+    // 있으면? 로드해용
 
     // TODO: 세션 추가
 

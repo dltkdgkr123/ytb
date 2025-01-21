@@ -2,14 +2,14 @@ package com.sh.ytb.service;
 
 import com.google.api.client.auth.oauth2.StoredCredential;
 import com.sh.ytb.adapter.OAuthHelper;
-import com.sh.ytb.specs.TokenCipher;
-import com.sh.ytb.dto.GoogleTokenDTO;
-import com.sh.ytb.dto.TokenLoadReqDTO;
+import com.sh.ytb.dto.res.GoogleTokenResDTO;
+import com.sh.ytb.dto.req.GoogleTokenLoadReqDTO;
 import com.sh.ytb.entity.GoogleTokenJPAEntity;
 import com.sh.ytb.exception.UserNotExistException;
 import com.sh.ytb.mapper.TokenMapper;
 import com.sh.ytb.repository.GoogleTokenRepository;
 import com.sh.ytb.repository.UserRepository;
+import com.sh.ytb.specs.TokenCipher;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.util.Optional;
@@ -32,7 +32,7 @@ public class OAuthService {
     return oAuthHelper.getAuthorizationUri();
   }
 
-  public boolean tokenStore() throws IOException {
+  public void encryptedTokenStore() throws IOException {
 
     StoredCredential storedCredential = oAuthHelper.loadStoredCredential();
 
@@ -42,23 +42,23 @@ public class OAuthService {
             tokenCipher.encrypt(storedCredential.getRefreshToken())
         )
     );
-
-    return true;
   }
 
-  public Optional<GoogleTokenDTO> tokenLoad(TokenLoadReqDTO tokenLoadReqDTO) {
+  public Optional<GoogleTokenResDTO> decryptedTokenLoad(GoogleTokenLoadReqDTO googleTokenLoadReqDTO) {
 
-    String userId = tokenLoadReqDTO.getUserId();
+    String userId = googleTokenLoadReqDTO.getUserId();
 
     /* 유저 ID가 아닌, 식별자를 의미 */
     Long id = userRepository.findByUserId(userId)
         .orElseThrow(() -> new UserNotExistException(userId)).getId();
 
-    Optional<GoogleTokenJPAEntity> tokenOptinal = googleTokenRepository.findById(id);
+    Optional<GoogleTokenJPAEntity> tokenOptional = googleTokenRepository.findById(id);
 
-    if (tokenOptinal.isPresent()) {
-      return Optional.of(tokenMapper.mapJPAEntityToDTO(tokenOptinal.get()));
-    }
-    return Optional.empty();
+    return tokenOptional.map(
+        token -> tokenMapper.mapGoogleTokenToDTO(
+            tokenCipher.decrypt(token.getAccessToken()),
+            tokenCipher.decrypt(token.getRefreshToken())
+        )
+    );
   }
 }

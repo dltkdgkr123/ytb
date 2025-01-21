@@ -1,11 +1,9 @@
 package com.sh.ytb.controller;
 
 
-import com.google.api.services.youtube.model.SearchResult;
-import com.sh.ytb.dto.UserSignInReqDTO;
-import com.sh.ytb.dto.UserSignUpReqDTO;
+import com.sh.ytb.dto.req.UserSignInReqDTO;
+import com.sh.ytb.dto.req.UserSignUpReqDTO;
 import com.sh.ytb.service.UserService;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

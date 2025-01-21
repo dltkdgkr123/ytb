@@ -1,15 +1,15 @@
-package com.sh.ytb.dto;
+package com.sh.ytb.dto.req;
 
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
+@ToString
 @Builder
-public class UserSignInReqDTO {
+public class GoogleTokenLoadReqDTO {
 
   private String userId;
-
-  private String password;
 }

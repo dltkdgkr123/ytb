@@ -2,7 +2,7 @@ package com.sh.ytb.mapper;
 
 import com.google.api.services.youtube.model.Subscription;
 import com.google.api.services.youtube.model.SubscriptionSnippet;
-import com.sh.ytb.dto.SubscribeResDTO;
+import com.sh.ytb.dto.res.SubscribeResDTO;
 import com.sh.ytb.entity.SubScribeJPAEntity;
 import java.util.Arrays;
 import java.util.List;

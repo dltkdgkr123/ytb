@@ -1,4 +1,4 @@
-package com.sh.ytb.dto;
+package com.sh.ytb.dto.res;
 
 
 import com.google.api.client.util.DateTime;

@@ -2,7 +2,7 @@ package com.sh.ytb.specs.impl;
 
 import com.sh.ytb.specs.TokenCipher;
 import com.sh.ytb.exception.AESCipherInvalidException;
-import com.sh.ytb.properties.secret.AESProperties;
+import com.sh.ytb.properties.secret.EncryptProperties;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
@@ -13,10 +13,10 @@ import javax.crypto.NoSuchPaddingException;
 
 public class AESCipher implements TokenCipher {
 
-  private final AESProperties aesProperties;
+  private final EncryptProperties encryptProperties;
 
-  public AESCipher(AESProperties aesProperties) {
-    this.aesProperties = aesProperties;
+  public AESCipher(EncryptProperties encryptProperties) {
+    this.encryptProperties = encryptProperties;
   }
 
 
@@ -24,7 +24,7 @@ public class AESCipher implements TokenCipher {
 
     try {
       Cipher cipher = Cipher.getInstance("AES");
-      cipher.init(Cipher.ENCRYPT_MODE, aesProperties.getSecretKeyForAES());
+      cipher.init(Cipher.ENCRYPT_MODE, encryptProperties.getAESSecretKey());
       byte[] encryptedData = cipher.doFinal(data.getBytes());
 
       return Base64.getEncoder().encodeToString(encryptedData);
@@ -43,7 +43,7 @@ public class AESCipher implements TokenCipher {
 
     try {
       Cipher cipher = Cipher.getInstance("AES");
-      cipher.init(Cipher.DECRYPT_MODE, aesProperties.getSecretKeyForAES());
+      cipher.init(Cipher.DECRYPT_MODE, encryptProperties.getAESSecretKey());
       byte[] decodedData = Base64.getDecoder().decode(encryptedData);
       byte[] decryptedData = cipher.doFinal(decodedData);
 
