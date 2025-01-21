@@ -1,5 +1,7 @@
 package com.sh.ytb.module;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import java.util.concurrent.TimeUnit;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -25,7 +27,7 @@ public class RedisTests {
     String pingResponse = redisTemplate.getConnectionFactory().getConnection().ping();
 
     // Then
-    Assertions.assertEquals("PONG", pingResponse);
+    assertEquals("PONG", pingResponse);
 
     // 2. Basic Operation Test
 
@@ -37,6 +39,6 @@ public class RedisTests {
     String getResponse = ops.get("testKey");
 
     // Then
-    Assertions.assertEquals("testValue", getResponse);
+    assertEquals("testValue", getResponse);
   }
 }

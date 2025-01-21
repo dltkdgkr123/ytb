@@ -1,10 +1,12 @@
 package com.sh.ytb.module;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import com.sh.ytb.adapter.OAuthHelper;
 import io.restassured.RestAssured;
 import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,8 +46,8 @@ class OAuthHelperTests {
 
     boolean success = !uri.isEmpty();
 
-    Assertions.assertEquals(HttpStatus.OK.value(), response.statusCode());
-    Assertions.assertTrue(success);
+    assertEquals(HttpStatus.OK.value(), response.statusCode());
+    assertTrue(success);
   }
 
   /* FIXME: 신빙성있는 검증 필요 */
@@ -60,8 +62,8 @@ class OAuthHelperTests {
 
     boolean success = !uri.isEmpty();
 
-    Assertions.assertEquals(HttpStatus.OK.value(), response.statusCode());
-    Assertions.assertTrue(success);
+    assertEquals(HttpStatus.OK.value(), response.statusCode());
+    assertTrue(success);
   }
 
   /* FIXME: 신빙성있는 검증 필요 */

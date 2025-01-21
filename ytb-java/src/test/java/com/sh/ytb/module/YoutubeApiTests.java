@@ -1,5 +1,7 @@
 package com.sh.ytb.module;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import com.sh.ytb.adapter.OAuthHelper;
 import com.sh.ytb.adapter.YoutubeHelper;
 import io.restassured.RestAssured;
@@ -42,7 +44,7 @@ class YoutubeApiTests {
         .contentType(MediaType.APPLICATION_JSON_VALUE)
         .when().get("/youtube/video/mostPopular").then().log().all().extract();
 
-    Assertions.assertEquals(HttpStatus.OK.value(), response.statusCode());
+    assertEquals(HttpStatus.OK.value(), response.statusCode());
   }
 
   /* TODO: 구현 및 필요한 필드만 사용 - reources/doc/SubscribeJsonFields.txt */

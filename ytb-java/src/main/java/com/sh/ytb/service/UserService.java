@@ -1,14 +1,13 @@
 package com.sh.ytb.service;
 
-import com.sh.ytb.dto.UserSignInDTO;
-import com.sh.ytb.dto.UserSignUpDTO;
+import com.sh.ytb.dto.UserSignInReqDTO;
+import com.sh.ytb.dto.UserSignUpReqDTO;
 import com.sh.ytb.entity.UserJPAEntity;
 import com.sh.ytb.exception.PasswordNotMatchException;
 import com.sh.ytb.exception.UserNotExistException;
 import com.sh.ytb.mapper.UserMapper;
 import com.sh.ytb.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,28 +19,28 @@ public class UserService {
   private final UserRepository userRepository;
   private final UserMapper userMapper;
   private final PasswordEncoder passwordEncoder;
-  private final RedisTemplate<String, Object> redisTemplate;
 
-  public void userSignUp(UserSignUpDTO userSignUpDTO) {
+  public void userSignUp(UserSignUpReqDTO userSignUpReqDTO) {
 
-    userRepository.save(userMapper.mapDTOToJPAEntity(userSignUpDTO));
+    userRepository.save(userMapper.mapDTOToJPAEntity(userSignUpReqDTO));
   }
 
   @Transactional
-  public boolean userSignIn(UserSignInDTO userSignInDTO) {
+  public boolean userSignIn(UserSignInReqDTO userSignInReqDTO) {
 
     UserJPAEntity userJPAEntity =
-        userRepository.findByUserId(userSignInDTO.getUserId())
-            .orElseThrow(() -> new UserNotExistException(userSignInDTO.getUserId()));
+        userRepository.findByUserId(userSignInReqDTO.getUserId())
+            .orElseThrow(() -> new UserNotExistException(userSignInReqDTO.getUserId()));
 
-    boolean pwdMatched = passwordEncoder.matches(userSignInDTO.getPassword(),
+    boolean pwdMatched = passwordEncoder.matches(userSignInReqDTO.getPassword(),
         userJPAEntity.getPassword());
 
     if (!pwdMatched) {
-      throw new PasswordNotMatchException(userSignInDTO.getUserId());
+      throw new PasswordNotMatchException(userSignInReqDTO.getUserId());
     }
 
-    // TODO: 구현
+    // TODO: 세션 추가
+
     return true;
   }
 }

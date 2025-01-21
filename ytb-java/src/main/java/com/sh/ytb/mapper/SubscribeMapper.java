@@ -2,7 +2,7 @@ package com.sh.ytb.mapper;
 
 import com.google.api.services.youtube.model.Subscription;
 import com.google.api.services.youtube.model.SubscriptionSnippet;
-import com.sh.ytb.dto.SubscribeDTO;
+import com.sh.ytb.dto.SubscribeResDTO;
 import com.sh.ytb.entity.SubScribeJPAEntity;
 import java.util.Arrays;
 import java.util.List;
@@ -12,12 +12,12 @@ import org.springframework.stereotype.Component;
 public class SubscribeMapper {
 
   /* Obj -> DTO */
-  public SubscribeDTO mapObjToDTO(Subscription subscription) {
+  public SubscribeResDTO mapObjToDTO(Subscription subscription) {
 
     SubscriptionSnippet snippet = subscription.getSnippet();
 
     return
-        SubscribeDTO.builder()
+        SubscribeResDTO.builder()
             .title(snippet.getTitle())
             .channelId(snippet.getChannelId())
             .thumbnailUrl(snippet.getThumbnails().getMedium().getUrl())
@@ -27,7 +27,7 @@ public class SubscribeMapper {
   }
 
   /* Obj List -> DTO List */
-  public List<SubscribeDTO> mapObjToDTO(List<Subscription> subscriptions) {
+  public List<SubscribeResDTO> mapObjToDTO(List<Subscription> subscriptions) {
 
     return subscriptions.stream()
         .map(this::mapObjToDTO)
@@ -35,7 +35,7 @@ public class SubscribeMapper {
   }
 
   /* Obj Array -> DTO List */
-  public List<SubscribeDTO> mapObjToDTO(Subscription... subscriptions) {
+  public List<SubscribeResDTO> mapObjToDTO(Subscription... subscriptions) {
 
     return mapObjToDTO(Arrays.asList(subscriptions));
   }
@@ -70,30 +70,30 @@ public class SubscribeMapper {
   }
 
   /* DTO -> Entity */
-  public SubScribeJPAEntity mapDTOToJPAEntity(SubscribeDTO subscribeDTO) {
+  public SubScribeJPAEntity mapDTOToJPAEntity(SubscribeResDTO subscribeResDTO) {
 
     return
         SubScribeJPAEntity.builder()
-            .title(subscribeDTO.getTitle())
-            .channelId(subscribeDTO.getChannelId())
-            .thumbnailUrl(subscribeDTO.getThumbnailUrl())
-            .etag(subscribeDTO.getEtag())
-            .publishedAt(subscribeDTO.getPublishedAt())
+            .title(subscribeResDTO.getTitle())
+            .channelId(subscribeResDTO.getChannelId())
+            .thumbnailUrl(subscribeResDTO.getThumbnailUrl())
+            .etag(subscribeResDTO.getEtag())
+            .publishedAt(subscribeResDTO.getPublishedAt())
             .build();
   }
 
 
   /* DTO List -> Entity List */
-  public List<SubScribeJPAEntity> mapDTOToJPAEntity(List<SubscribeDTO> subscribeDTOs) {
+  public List<SubScribeJPAEntity> mapDTOToJPAEntity(List<SubscribeResDTO> subscribeResDTOS) {
 
-    return subscribeDTOs.stream()
+    return subscribeResDTOS.stream()
         .map(this::mapDTOToJPAEntity)
         .toList();
   }
 
   /* DTO Array -> Entity List */
-  public List<SubScribeJPAEntity> mapDTOOToJPAEntity(SubscribeDTO... subscribeDTOs) {
+  public List<SubScribeJPAEntity> mapDTOOToJPAEntity(SubscribeResDTO... subscribeResDTOS) {
 
-    return mapDTOToJPAEntity(Arrays.asList(subscribeDTOs));
+    return mapDTOToJPAEntity(Arrays.asList(subscribeResDTOS));
   }
 }

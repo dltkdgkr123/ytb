@@ -3,7 +3,7 @@ package com.sh.ytb.module;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import com.sh.ytb.dto.UserSignInDTO;
+import com.sh.ytb.dto.UserSignInReqDTO;
 import com.sh.ytb.exception.PasswordNotMatchException;
 import com.sh.ytb.exception.UserNotExistException;
 import com.sh.ytb.service.UserService;
@@ -31,13 +31,13 @@ class UserTests {
   void signIn_shouldSucceed_whenUserInfoMatched() {
 
     // Given
-    UserSignInDTO userSignInDTO = UserSignInDTO.builder()
+    UserSignInReqDTO userSignInReqDTO = UserSignInReqDTO.builder()
         .userId("id3001")
         .password("password3001")
         .build();
 
     // When
-    boolean success = userService.userSignIn(userSignInDTO);
+    boolean success = userService.userSignIn(userSignInReqDTO);
 
     // Then
     assertTrue(success);
@@ -47,14 +47,14 @@ class UserTests {
   void signIn_shouldThrowException_whenUserInfoNotMatched() {
 
     // Given
-    UserSignInDTO userSignInDTO = UserSignInDTO.builder()
+    UserSignInReqDTO userSignInReqDTO = UserSignInReqDTO.builder()
         .userId("id3001")
         .password("wrong pwd")
         .build();
 
     // When & Then
     assertThrows(PasswordNotMatchException.class, () -> {
-      userService.userSignIn(userSignInDTO);
+      userService.userSignIn(userSignInReqDTO);
     });
   }
 
@@ -62,14 +62,14 @@ class UserTests {
   void signIn_shouldThrowException_whenEntityNotExist() {
 
     // Given
-    UserSignInDTO userSignInDTO = UserSignInDTO.builder()
+    UserSignInReqDTO userSignInReqDTO = UserSignInReqDTO.builder()
         .userId("wrong id")
         .password("wrong pwd")
         .build();
 
     // When & Then
     assertThrows(UserNotExistException.class, () -> {
-      userService.userSignIn(userSignInDTO);
+      userService.userSignIn(userSignInReqDTO);
     });
   }
 }

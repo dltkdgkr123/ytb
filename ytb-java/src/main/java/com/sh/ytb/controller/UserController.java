@@ -2,8 +2,8 @@ package com.sh.ytb.controller;
 
 
 import com.google.api.services.youtube.model.SearchResult;
-import com.sh.ytb.dto.UserSignInDTO;
-import com.sh.ytb.dto.UserSignUpDTO;
+import com.sh.ytb.dto.UserSignInReqDTO;
+import com.sh.ytb.dto.UserSignUpReqDTO;
 import com.sh.ytb.service.UserService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -19,20 +19,22 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class UserController {
 
-  UserService userService;
+  private final UserService userService;
 
+  /* TODO: 반환 값 정의 */
   @PostMapping("/sign-up")
-  ResponseEntity<List<SearchResult>> signUpUser(@RequestBody UserSignUpDTO userSignUpDTO) {
+  ResponseEntity<?> signUpUser(@RequestBody UserSignUpReqDTO userSignUpReqDTO) {
 
-    userService.userSignUp(userSignUpDTO);
+    userService.userSignUp(userSignUpReqDTO);
 
     return ResponseEntity.status(HttpStatus.OK).build();
   }
 
+  /* TODO: 반환 값 정의 */
   @PostMapping("/sign-in")
-  ResponseEntity<List<SearchResult>> signInUser(@RequestBody UserSignInDTO userSignInDTO) {
+  ResponseEntity<?> signInUser(@RequestBody UserSignInReqDTO userSignInReqDTO) {
 
-    userService.userSignIn(userSignInDTO);
+    userService.userSignIn(userSignInReqDTO);
 
     return ResponseEntity.status(HttpStatus.OK).build();
   }

@@ -11,7 +11,7 @@ import lombok.ToString;
 @Setter
 @ToString
 @Builder
-public class SubscribeDTO {
+public class SubscribeResDTO {
 
   // DTO 자체 고유 식별자
   private Long id;
