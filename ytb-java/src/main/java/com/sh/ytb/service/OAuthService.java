@@ -1,64 +1,29 @@
 package com.sh.ytb.service;
 
-import com.google.api.client.auth.oauth2.StoredCredential;
-import com.sh.ytb.adapter.OAuthHelper;
-import com.sh.ytb.dto.res.GoogleTokenResDTO;
-import com.sh.ytb.dto.req.GoogleTokenLoadReqDTO;
-import com.sh.ytb.entity.GoogleTokenJPAEntity;
-import com.sh.ytb.exception.UserNotExistException;
-import com.sh.ytb.mapper.TokenMapper;
-import com.sh.ytb.repository.GoogleTokenRepository;
-import com.sh.ytb.repository.UserRepository;
-import com.sh.ytb.specs.TokenCipher;
+import com.google.api.client.auth.oauth2.Credential;
+import com.sh.ytb.adapter.GoogleOAuthHelper;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
-import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
 public class OAuthService {
 
-  private final OAuthHelper oAuthHelper;
-  private final GoogleTokenRepository googleTokenRepository;
-  private final UserRepository userRepository;
-  private final TokenMapper tokenMapper;
-  private final TokenCipher tokenCipher;
+  private final GoogleOAuthHelper googleOAuthHelper;
 
+  public String googleAuthorizationUriGet() throws GeneralSecurityException, IOException {
 
-  public String authorizationUriGet() throws GeneralSecurityException, IOException {
-
-    return oAuthHelper.getAuthorizationUri();
+    return googleOAuthHelper.getAuthorizationUri();
   }
 
-  public void encryptedTokenStore() throws IOException {
+  @Transactional
+  public void afterUserGoogleAuthSuccessCallback(String code) throws GeneralSecurityException, IOException {
 
-    StoredCredential storedCredential = oAuthHelper.loadStoredCredential();
+    Credential credential = googleOAuthHelper.afterCallback(code);
 
-    googleTokenRepository.save(
-        tokenMapper.mapGoogleTokenToJPAEntity(
-            tokenCipher.encrypt(storedCredential.getAccessToken()),
-            tokenCipher.encrypt(storedCredential.getRefreshToken())
-        )
-    );
-  }
-
-  public Optional<GoogleTokenResDTO> decryptedTokenLoad(GoogleTokenLoadReqDTO googleTokenLoadReqDTO) {
-
-    String userId = googleTokenLoadReqDTO.getUserId();
-
-    /* 유저 ID가 아닌, 식별자를 의미 */
-    Long id = userRepository.findByUserId(userId)
-        .orElseThrow(() -> new UserNotExistException(userId)).getId();
-
-    Optional<GoogleTokenJPAEntity> tokenOptional = googleTokenRepository.findById(id);
-
-    return tokenOptional.map(
-        token -> tokenMapper.mapGoogleTokenToDTO(
-            tokenCipher.decrypt(token.getAccessToken()),
-            tokenCipher.decrypt(token.getRefreshToken())
-        )
-    );
+    /* TODO: credential TokenEntity로 맵핑 후 DB 저장, 필요하다면 세션에 토큰 캐싱 */
   }
 }

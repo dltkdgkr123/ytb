@@ -2,7 +2,11 @@ package com.sh.ytb.exception;
 
 public class UserNotExistException extends RuntimeException {
 
-  public UserNotExistException(String name) {
-    super("This user does not exist: " + name);
+  public UserNotExistException(String userId) {
+    super("This user does not exist: " + userId);
+  }
+
+  public UserNotExistException(Long id) {
+    super("This user does not exist: " + id);
   }
 }

@@ -16,7 +16,7 @@ public class UserMapper {
 
     return
         UserJPAEntity.builder()
-            .id(null) // TODO: 체크
+//            .id()
             .userId(userSignUpReqDTO.getUserId())
             .password(passwordEncoder.encode(userSignUpReqDTO.getPassword()))
             .build();

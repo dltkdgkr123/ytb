@@ -1,5 +1,6 @@
 package com.sh.ytb.entity;
 
+import jakarta.annotation.Nonnull;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -26,6 +27,7 @@ public class GoogleTokenJPAEntity {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
+  @Nonnull
   @OneToOne
   @JoinColumn(name = "user_id")
   private UserJPAEntity user;

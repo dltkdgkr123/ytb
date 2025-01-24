@@ -1,7 +1,11 @@
 package com.sh.ytb.application;
 
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 import io.restassured.RestAssured;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.web.server.LocalServerPort;
@@ -19,4 +23,9 @@ class ApplicationLayerIntegrationTests {
     RestAssured.port = port;
   }
 
+  @Test
+  void contextLoadTest() {
+
+    assertTrue(true);
+  }
 }

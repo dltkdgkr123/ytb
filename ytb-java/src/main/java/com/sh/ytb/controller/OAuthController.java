@@ -1,32 +1,39 @@
 package com.sh.ytb.controller;
 
-import com.sh.ytb.dto.res.GoogleTokenResDTO;
-import com.sh.ytb.dto.req.GoogleTokenLoadReqDTO;
 import com.sh.ytb.service.OAuthService;
-import java.util.Optional;
+import jakarta.servlet.http.HttpServletRequest;
+import java.io.IOException;
+import java.security.GeneralSecurityException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("/oauth")
 @RequiredArgsConstructor
-public class OAuthController {
+class OAuthController {
 
   private final OAuthService oAuthService;
 
-  @GetMapping("/load-google-token")
-  ResponseEntity<GoogleTokenResDTO> loadGoogleToken(@RequestBody GoogleTokenLoadReqDTO googleTokenLoadReqDTO) {
+  @GetMapping("/google-auth")
+  ResponseEntity<String> getGoogleAuthorizationUri() throws GeneralSecurityException, IOException {
 
-    // TODO: 본인 맞는지 검증 절차
-    Optional<GoogleTokenResDTO> result = oAuthService.decryptedTokenLoad(googleTokenLoadReqDTO);
+    String uri = oAuthService.googleAuthorizationUriGet();
 
-    return result
-        .map(googleTokenResDTO -> ResponseEntity.status(HttpStatus.OK).body(googleTokenResDTO))
-        .orElseGet(() -> ResponseEntity.status(HttpStatus.FORBIDDEN).build());
+    return ResponseEntity.status(HttpStatus.OK).body(uri);
+  }
+
+  /* it's google auth endpoint */
+  @GetMapping("/call-back")
+  ResponseEntity<String> callbackAfterUserGoogleAuthSuccess(@RequestParam String code) {
+
+    oAuthService.afterUserGoogleAuthSuccessCallback(code);
+    /* TODO: 리디렉션 검증 */
+    return ResponseEntity.status(HttpStatus.OK).body("call-back");
   }
 }

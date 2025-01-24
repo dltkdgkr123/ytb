@@ -18,6 +18,7 @@ public class SubscribeMapper {
 
     return
         SubscribeResDTO.builder()
+//            .id()
             .title(snippet.getTitle())
             .channelId(snippet.getChannelId())
             .thumbnailUrl(snippet.getThumbnails().getMedium().getUrl())
@@ -47,6 +48,7 @@ public class SubscribeMapper {
 
     return
         SubScribeJPAEntity.builder()
+            //            .id()
             .title(snippet.getTitle())
             .channelId(snippet.getChannelId())
             .thumbnailUrl(snippet.getThumbnails().getMedium().getUrl())
@@ -74,6 +76,7 @@ public class SubscribeMapper {
 
     return
         SubScribeJPAEntity.builder()
+            //            .id()
             .title(subscribeResDTO.getTitle())
             .channelId(subscribeResDTO.getChannelId())
             .thumbnailUrl(subscribeResDTO.getThumbnailUrl())

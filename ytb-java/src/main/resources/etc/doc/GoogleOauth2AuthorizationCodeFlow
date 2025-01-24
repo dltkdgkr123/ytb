@@ -1,0 +1,14 @@
+ref:
+https://googleapis.dev/java/google-oauth-client/1.25.0/com/google/api/client/auth/oauth2/AuthorizationCodeFlow.html#createAndStoreCredential-com.google.api.client.auth.oauth2.TokenResponse-java.lang.String-
+
+translations:
+
+첫 번째 단계는
+알려진 사용자 ID를 기반으로 loadCredential(String)을 호출하여 최종 사용자의 자격 증명이 이미 알려져 있는지 확인하는 것입니다.
+그렇지 않은 경우 newAuthorizationUrl()을 호출하여 최종 사용자의 브라우저를 권한 부여 페이지로 안내합니다.
+
+그런 다음 웹 브라우저는 "code" 쿼리 매개변수와 함께 리디렉션 URL로 리디렉션하며,
+이 매개변수는 newTokenRequest(String)를 사용하여 액세스 토큰을 요청하는 데 사용할 수 있습니다.
+
+마지막으로 createAndStoreCredential(TokenResponse, String)을 사용하여
+보호된 리소스에 액세스하기 위한 자격 증명을 저장하고 가져옵니다.

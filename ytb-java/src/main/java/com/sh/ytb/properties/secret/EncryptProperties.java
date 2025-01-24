@@ -13,14 +13,15 @@ import org.springframework.stereotype.Component;
     prefix = "encrypt")
 @Component
 @Setter
+@SuppressWarnings("java:S116")
 public class EncryptProperties {
 
   private EncryptProperties() {
   }
 
-  String aesSecretKey;
+  String AESSecretKey;
 
   public SecretKey getAESSecretKey() {
-    return new SecretKeySpec(aesSecretKey.getBytes(), "AES");
+    return new SecretKeySpec(AESSecretKey.getBytes(), "AES");
   }
 }

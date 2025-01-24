@@ -3,6 +3,7 @@ package com.sh.ytb.controller;
 
 import com.sh.ytb.dto.req.UserSignInReqDTO;
 import com.sh.ytb.dto.req.UserSignUpReqDTO;
+import com.sh.ytb.dto.res.UserSignInResDTO;
 import com.sh.ytb.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -19,21 +20,21 @@ public class UserController {
 
   private final UserService userService;
 
-  /* TODO: 반환 값 정의 */
+
   @PostMapping("/sign-up")
-  ResponseEntity<?> signUpUser(@RequestBody UserSignUpReqDTO userSignUpReqDTO) {
+  ResponseEntity<Void> signUpUser(@RequestBody UserSignUpReqDTO userSignUpReqDTO) {
 
     userService.userSignUp(userSignUpReqDTO);
 
     return ResponseEntity.status(HttpStatus.OK).build();
   }
 
-  /* TODO: 반환 값 정의 */
+
   @PostMapping("/sign-in")
-  ResponseEntity<?> signInUser(@RequestBody UserSignInReqDTO userSignInReqDTO) {
+  ResponseEntity<UserSignInResDTO> signInUser(@RequestBody UserSignInReqDTO userSignInReqDTO) {
 
-    userService.userSignIn(userSignInReqDTO);
+    UserSignInResDTO results = userService.userSignIn(userSignInReqDTO);
 
-    return ResponseEntity.status(HttpStatus.OK).build();
+    return ResponseEntity.status(HttpStatus.OK).body(results);
   }
 }

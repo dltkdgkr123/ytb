@@ -1,6 +1,6 @@
 package com.sh.ytb.module;
 
-import com.sh.ytb.adapter.OAuthHelper;
+import com.sh.ytb.adapter.GoogleOAuthHelper;
 import com.sh.ytb.adapter.YoutubeHelper;
 import com.sh.ytb.mapper.SubscribeMapper;
 import io.restassured.RestAssured;
@@ -22,7 +22,7 @@ class SubscribeMapperTests {
   private int port;
 
   @Autowired
-  OAuthHelper oAuthHelper;
+  GoogleOAuthHelper googleOAuthHelper;
 
   @Autowired
   YoutubeHelper youtubeHelper;

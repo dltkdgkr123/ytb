@@ -8,7 +8,6 @@ import java.io.IOException;
 import org.springframework.context.annotation.Profile;
 
 /* Spring Session이 따르고 있는 HttpSession 표준 방식 */
-@Profile("archive")
 @WebServlet("/session")
 public class SessionServlet extends HttpServlet {
 

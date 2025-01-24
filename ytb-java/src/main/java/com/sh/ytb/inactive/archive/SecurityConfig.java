@@ -25,7 +25,6 @@ public class SecurityConfig<S extends Session> {
   @Autowired
   private FindByIndexNameSessionRepository<S> sessionRepository;
 
-  @Profile("archive")
   @Bean
   public SpringSessionRememberMeServices rememberMeServices() {
     SpringSessionRememberMeServices rememberMeServices =

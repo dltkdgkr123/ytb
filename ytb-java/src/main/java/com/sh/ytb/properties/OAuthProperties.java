@@ -34,4 +34,12 @@ public class OAuthProperties {
       "https://www.googleapis.com/auth/youtube.readonly",
       "https://www.googleapis.com/auth/youtube.force-ssl"
   ); // It's ImmutableList
+
+  /* FIXME: callback, call-back 네이밍 혼재 */
+  public static final String oauth_callback_uri = "http://localhost:8080/oauth/call-back";
+  public static final String oauth_redirect_uri = "http://localhost:8080/home";
+
+  public static final String oauth_access_type = "offline";
+
+  public static final Long oauth_token_expiration_time_millis = 1800000L; // 30 minutes
 }

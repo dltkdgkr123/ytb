@@ -8,7 +8,6 @@ import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 import org.springframework.context.annotation.Profile;
 
-@Profile("archive")
 public class AESKeyGenerator {
 
   public static String generateAESKey() throws NoSuchAlgorithmException {

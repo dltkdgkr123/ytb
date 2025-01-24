@@ -2,12 +2,11 @@ package com.sh.ytb.module;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import com.sh.ytb.adapter.OAuthHelper;
+import com.sh.ytb.adapter.GoogleOAuthHelper;
 import com.sh.ytb.adapter.YoutubeHelper;
 import io.restassured.RestAssured;
 import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +33,7 @@ class YoutubeApiTests {
   YoutubeHelper youtubeHelper;
 
   @Autowired
-  OAuthHelper oAuthHelper;
+  GoogleOAuthHelper googleOAuthHelper;
 
   /* FIXME : 프젝 볼륨 커지면 삭제 */
   @Test

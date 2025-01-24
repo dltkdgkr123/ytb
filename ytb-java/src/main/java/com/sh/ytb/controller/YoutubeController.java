@@ -3,7 +3,6 @@ package com.sh.ytb.controller;
 import com.google.api.services.youtube.model.SearchResult;
 import com.sh.ytb.service.OAuthService;
 import com.sh.ytb.service.YoutubeService;
-import jakarta.annotation.security.PermitAll;
 import java.io.IOException;
 import java.security.GeneralSecurityException;
 import java.util.List;
@@ -31,13 +30,5 @@ class YoutubeController {
     List<SearchResult> results = youtubeService.mostPopularVideosGet();
 
     return ResponseEntity.status(HttpStatus.OK).body(results);
-  }
-
-  @GetMapping("/auth")
-  ResponseEntity<String> getAuthorizationUri() throws GeneralSecurityException, IOException {
-
-    String uri = oAuthService.authorizationUriGet();
-
-    return ResponseEntity.status(HttpStatus.OK).body(uri);
   }
 }

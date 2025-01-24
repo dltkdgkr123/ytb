@@ -14,7 +14,7 @@ import static com.sh.ytb.properties.VideoProperties.video_type;
 
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
-import com.google.api.client.json.jackson2.JacksonFactory;
+import com.google.api.client.json.gson.GsonFactory;
 import com.google.api.services.youtube.YouTube;
 import com.google.api.services.youtube.model.SearchResult;
 import com.google.api.services.youtube.model.Subscription;
@@ -36,7 +36,7 @@ public class YoutubeHelper {
 
     YouTube youtube = new YouTube.Builder(
         GoogleNetHttpTransport.newTrustedTransport(),
-        JacksonFactory.getDefaultInstance(),
+        GsonFactory.getDefaultInstance(),
         credential)
         .setApplicationName(subscribe_application_name)
         .build();
@@ -54,7 +54,7 @@ public class YoutubeHelper {
 
     YouTube youtube = new YouTube.Builder(
         GoogleNetHttpTransport.newTrustedTransport(),
-        JacksonFactory.getDefaultInstance(),
+        GsonFactory.getDefaultInstance(),
         request -> {
         })
         .setApplicationName(video_application_name)
