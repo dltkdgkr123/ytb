@@ -3,7 +3,7 @@ package com.sh.ytb.module;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import com.sh.ytb.adapter.GoogleOAuthHelper;
+import com.sh.ytb.adapter.out.google.GoogleOAuthHelper;
 import io.restassured.RestAssured;
 import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;

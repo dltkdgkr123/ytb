@@ -2,8 +2,8 @@ package com.sh.ytb.module;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import com.sh.ytb.adapter.GoogleOAuthHelper;
-import com.sh.ytb.adapter.YoutubeHelper;
+import com.sh.ytb.adapter.out.google.GoogleOAuthHelper;
+import com.sh.ytb.adapter.out.google.YoutubeHelper;
 import io.restassured.RestAssured;
 import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;

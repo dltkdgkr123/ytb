@@ -2,7 +2,7 @@ package com.sh.ytb.module;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import com.sh.ytb.specs.TokenCipher;
+import com.sh.ytb.common.config.spec.TokenCipher;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

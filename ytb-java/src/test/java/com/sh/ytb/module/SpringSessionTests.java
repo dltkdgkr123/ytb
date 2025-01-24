@@ -2,9 +2,9 @@ package com.sh.ytb.module;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import com.sh.ytb.controller.UserController;
-import com.sh.ytb.dto.req.UserSignInReqDTO;
-import com.sh.ytb.service.UserService;
+import com.sh.ytb.adapter.in.web.UserController;
+import com.sh.ytb.app.dto.req.UserSignInReqDTO;
+import com.sh.ytb.app.service.UserService;
 import io.restassured.RestAssured;
 import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;

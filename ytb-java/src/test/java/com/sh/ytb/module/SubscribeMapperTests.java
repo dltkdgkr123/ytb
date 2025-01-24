@@ -1,8 +1,8 @@
 package com.sh.ytb.module;
 
-import com.sh.ytb.adapter.GoogleOAuthHelper;
-import com.sh.ytb.adapter.YoutubeHelper;
-import com.sh.ytb.mapper.SubscribeMapper;
+import com.sh.ytb.adapter.out.google.GoogleOAuthHelper;
+import com.sh.ytb.adapter.out.google.YoutubeHelper;
+import com.sh.ytb.app.mapper.SubscribeMapper;
 import io.restassured.RestAssured;
 import java.io.IOException;
 import java.security.GeneralSecurityException;

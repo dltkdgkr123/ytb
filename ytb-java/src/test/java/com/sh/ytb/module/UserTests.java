@@ -4,11 +4,11 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import com.sh.ytb.dto.req.UserSignInReqDTO;
-import com.sh.ytb.dto.res.UserSignInResDTO;
-import com.sh.ytb.exception.PasswordNotMatchException;
-import com.sh.ytb.exception.UserNotExistException;
-import com.sh.ytb.service.UserService;
+import com.sh.ytb.app.dto.req.UserSignInReqDTO;
+import com.sh.ytb.app.dto.res.UserSignInResDTO;
+import com.sh.ytb.common.exception.PasswordNotMatchException;
+import com.sh.ytb.common.exception.UserNotExistException;
+import com.sh.ytb.app.service.UserService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
