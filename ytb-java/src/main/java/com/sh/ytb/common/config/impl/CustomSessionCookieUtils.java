@@ -1,18 +1,22 @@
 package com.sh.ytb.common.config.impl;
 
-import com.sh.ytb.common.config.spec.CookieUtils;
+import com.sh.ytb.common.config.spec.SessionCookieUtils;
 import com.sh.ytb.common.properties.secret.SessionProperties;
 import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.util.Optional;
-import lombok.RequiredArgsConstructor;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-@RequiredArgsConstructor
-public class SessionCookieUtils implements CookieUtils {
+public class CustomSessionCookieUtils implements SessionCookieUtils {
 
   private final SessionProperties sessionProperties;
+
+  CustomSessionCookieUtils(SessionProperties sessionProperties) {
+    this.sessionProperties = sessionProperties;
+  }
 
   public void addCookie(HttpServletResponse response, Cookie cookie) {
 
@@ -45,5 +49,10 @@ public class SessionCookieUtils implements CookieUtils {
   public Cookie makeSessionIdCookie(String sessionId) {
 
     return makeCookie(sessionProperties.getSessionId(), sessionId, 1800);
+  }
+
+  @Override
+  public HttpSession getSession(HttpServletRequest request) {
+    return null;
   }
 }

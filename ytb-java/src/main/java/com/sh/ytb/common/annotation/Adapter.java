@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 
 /**
  * <p> 외부 시스템(Browser, Cloud, Storage..)과 WAS를 연결하는 레이어에 적용
+ * 클래스 구조 상 분류를 위함이며, port 및 외부 시스템과의 adapt 동작은 MVP 제작 이후 필요하면 구현
  *
  * @author sh
  * @since 1.0

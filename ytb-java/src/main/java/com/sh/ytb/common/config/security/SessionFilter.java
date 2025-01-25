@@ -1,7 +1,7 @@
-package com.sh.ytb.common.filter;
+package com.sh.ytb.common.config.security;
 
-import com.sh.ytb.common.config.impl.SessionCookieUtils;
-import com.sh.ytb.common.config.impl.SessionGenerator;
+import com.sh.ytb.common.config.spec.SessionCookieUtils;
+import com.sh.ytb.common.config.spec.SessionGenerator;
 import com.sh.ytb.common.properties.secret.SessionProperties;
 import jakarta.annotation.Nonnull;
 import jakarta.servlet.FilterChain;
@@ -29,19 +29,20 @@ public class SessionFilter extends OncePerRequestFilter {
       @Nonnull FilterChain filterChain) throws ServletException, IOException {
 
     /*
-    * request에서 cookie 존재 유무 판별
-    * - cookie가 있다면 그대로 사용
-    * - cookie가 없다면 만들고 response에 추가 후 사용
-    * */
+     * request에서 cookie 존재 유무 판별
+     * - cookie가 있다면 그대로 사용
+     * - cookie가 없다면 만들고 response에 추가 후 사용
+     * */
     String sessionId =
         Arrays.stream(request.getCookies())
-            .filter(cookie -> Objects.equals(cookie.getName(),
-                sessionProperties.getSessionId())) // Option: null-safe 비교 중, 어차피 로직 상 null이면 안됨
+            /* Option: null-safe 비교 중, 어차피 로직 상 null이면 안됨 */
+            .filter(cookie -> Objects.equals(cookie.getName(), sessionProperties.getSessionId()))
             .findFirst()
             .orElseGet(() -> {
 
               String newSessionId = sessionGenerator.generateSessionId();
-              Cookie newSessionIdCookie = sessionCookieUtils.makeSessionIdCookie(newSessionId);
+              Cookie newSessionIdCookie = sessionCookieUtils.makeSessionIdCookie(
+                  newSessionId);
               sessionCookieUtils.addCookie(response, newSessionIdCookie);
 
               return newSessionIdCookie;

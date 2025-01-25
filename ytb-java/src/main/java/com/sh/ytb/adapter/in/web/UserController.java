@@ -29,7 +29,6 @@ public class UserController {
     return ResponseEntity.status(HttpStatus.OK).build();
   }
 
-
   @PostMapping("/sign-in")
   ResponseEntity<UserSignInResDTO> signInUser(@RequestBody UserSignInReqDTO userSignInReqDTO) {
 
