@@ -4,13 +4,13 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import java.util.Optional;
-import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-@Deprecated
+/* 라이브러리 (Spring Session, Apache...)를 사용하게 되면서 폐기  */
+@Deprecated(forRemoval = true)
 @Component
 public class HttpRequestUtils {
 

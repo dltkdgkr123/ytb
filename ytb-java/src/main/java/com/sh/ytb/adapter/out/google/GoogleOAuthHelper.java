@@ -32,7 +32,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class GoogleOAuthHelper implements OAuthAdapter {
 
   /* FIXME: 현재 null인 상태 -> 세션에서 가져오는 형식 구현, 테스트시 모킹 */
-  private final Long id;
+  private final Long id = 3001L;
 
   /**
    *

@@ -12,5 +12,6 @@ public class CookieConfig {
   public CookieSerializer cookieSerializer() {
     return new DefaultCookieSerializer();
   }
+
 }
 

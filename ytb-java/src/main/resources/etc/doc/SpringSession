@@ -8,7 +8,7 @@ ref => https://docs.spring.io/spring-session/reference/
 2. HttpSession 동작
 - Tomcat을 사용하는 대신 Redis에 값을 저장한다.
 - HttpSession 인터페이스를 Redis에서 지원하는 구현으로 대체한다.
-- 새로운 HttpSession이 생성되면 Spring Session은 브라우저에 "SESSION" key를 가진 쿠키를 생성한다.
+- 새로운 HttpSession이 생성되면 Spring Session은 브라우저에 지정한 key(default: SESSION)를 가진 쿠키를 생성한다.
 - 쿠키는 Session ID를 포함하고 있으며, Chrome 또는 Firefox에서 해당 쿠키를 조회할 수 있다.
 
 3. Filter가 작동하려면,

@@ -1,0 +1,26 @@
+
+@RestController("index-controller") // index bean이 스프링에 이미 있는 듯 함
+@RequestMapping("/home")
+@RequiredArgsConstructor
+public class Index {
+
+  @GetMapping
+  ResponseEntity<String> sayHello() {
+
+    return ResponseEntity.status(HttpStatus.OK).body("Hello");
+  }
+
+
+  @PostMapping
+  ResponseEntity<String> getSession(HttpServletRequest request, HttpSession session) {
+
+    //    System.out.println("case 1");
+    //    request.getSession().getAttribute("JSESSIONID"); // FAIL - throw NPE
+    //    System.out.println("case 2");
+    //    session.getAttribute("JSESSIONID"); // FAIL - throw NPE
+    //    System.out.println("case 3");
+    //    Arrays.stream(request.getCookies()).forEach(System.out::println); // FAIL - throw NPE
+
+    return ResponseEntity.status(HttpStatus.OK).body("getSession");
+  }
+}

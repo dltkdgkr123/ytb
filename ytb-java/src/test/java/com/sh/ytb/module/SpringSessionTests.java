@@ -1,6 +1,7 @@
 package com.sh.ytb.module;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.springframework.mock.http.server.reactive.MockServerHttpRequest.post;
 
 import com.sh.ytb.adapter.in.web.UserController;
 import com.sh.ytb.app.dto.req.UserSignInReqDTO;
@@ -51,5 +52,17 @@ public class SpringSessionTests {
         .body(userSignInReqDTO).post("/user/sign-in").then().log().all().extract();
 
     assertEquals(HttpStatus.OK.value(), response.statusCode());
+  }
+
+  @Test
+  void setCustomSession() throws InterruptedException {
+
+    final ExtractableResponse<Response> response = RestAssured.given().log().all()
+        .contentType(MediaType.APPLICATION_JSON_VALUE)
+        .post("/home").then().log().all().extract();
+
+    assertEquals(HttpStatus.OK.value(), response.statusCode());
+
+    Thread.sleep(1000000);
   }
 }

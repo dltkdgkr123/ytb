@@ -4,14 +4,15 @@ import com.google.api.client.auth.oauth2.AuthorizationCodeFlow.CredentialCreated
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.auth.oauth2.TokenResponse;
 import com.sh.ytb.adapter.out.jpa.entity.UserJPAEntity;
-import com.sh.ytb.app.mapper.TokenMapper;
 import com.sh.ytb.adapter.out.jpa.repo.GoogleTokenRepository;
 import com.sh.ytb.adapter.out.jpa.repo.UserRepository;
+import com.sh.ytb.app.mapper.TokenMapper;
 import com.sh.ytb.common.config.spec.TokenCipher;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
-@Deprecated
+/* 인증 방식 변경으로 인한 폐기 (Handler -> callback + end-point) */
+@Deprecated(forRemoval = true)
 @Component
 @RequiredArgsConstructor
 public class GoogleOAuthSuccessHandler implements CredentialCreatedListener {
