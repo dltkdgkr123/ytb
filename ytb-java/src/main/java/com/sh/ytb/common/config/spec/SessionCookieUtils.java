@@ -2,20 +2,15 @@ package com.sh.ytb.common.config.spec;
 
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
+import java.util.Optional;
 
 public interface SessionCookieUtils extends CookieUtils {
 
-  @Override
-  Cookie makeCookie(String name, String value, int expiryTimeSecs);
-
-  @Override
-  void addCookie(HttpServletResponse response, Cookie cookie);
+  Optional<Cookie> getSessionIdCookie(HttpServletRequest request);
 
   Cookie makeSessionIdCookie(String sessionId);
 
-  HttpSession getSession(HttpServletRequest request);
+//  HttpSession getSession(HttpServletRequest request);
 
   // 요구사항 기술
 }

@@ -21,4 +21,7 @@ public class SessionProperties {
   /* Spring Session과 Filter에 사용될 Session의 동기화를 위함 */
   @Value("${server.servlet.session.cookie.name}")
   String sessionId;
+
+  @Value("${spring.session.redis.namespace}" + ":sessions:")
+  String sessionPath;
 }

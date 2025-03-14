@@ -32,7 +32,7 @@ class OAuthController {
       throws GeneralSecurityException, IOException {
 
     oAuthService.afterUserGoogleAuthSuccessCallback(code);
-    /* TODO: 리디렉션 검증 */
-    return ResponseEntity.status(HttpStatus.OK).body("call-back");
+
+    return ResponseEntity.status(HttpStatus.OK).build();
   }
 }

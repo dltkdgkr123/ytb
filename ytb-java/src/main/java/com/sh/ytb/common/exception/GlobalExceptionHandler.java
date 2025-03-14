@@ -21,6 +21,18 @@ public class GlobalExceptionHandler {
     return new ResponseEntity<>(e.getMessage(), HttpStatus.UNAUTHORIZED);
   }
 
+  /* 403 */
+  @ExceptionHandler(SessionNotExistException.class)
+  public ResponseEntity<String> handleSessionNotExistException(SessionNotExistException e) {
+    return new ResponseEntity<>(e.getMessage(), HttpStatus.FORBIDDEN);
+  }
+
+  @ExceptionHandler(SessionInvalidException.class)
+  public ResponseEntity<String> handleSessionInvalidException(SessionInvalidException e) {
+    return new ResponseEntity<>(e.getMessage(), HttpStatus.FORBIDDEN);
+  }
+
+
   /* 404 */
   @ExceptionHandler(UserNotExistException.class)
   public ResponseEntity<String> handleUserNotExistException(UserNotExistException e) {
@@ -45,6 +57,12 @@ public class GlobalExceptionHandler {
 
   @ExceptionHandler(AESCipherInvalidException.class)
   public ResponseEntity<String> handleAESCipherInvalidException(AESCipherInvalidException e) {
+    return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+  }
+
+  @ExceptionHandler(SessionSerializerInvalidException.class)
+  public ResponseEntity<String> handleSessionSerializerInvalidException(
+      SessionSerializerInvalidException e) {
     return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
   }
 }

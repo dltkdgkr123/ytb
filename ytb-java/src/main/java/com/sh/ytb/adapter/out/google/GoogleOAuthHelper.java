@@ -2,7 +2,6 @@ package com.sh.ytb.adapter.out.google;
 
 import static com.sh.ytb.common.properties.OAuthProperties.oauth_access_type;
 import static com.sh.ytb.common.properties.OAuthProperties.oauth_callback_uri;
-import static com.sh.ytb.common.properties.OAuthProperties.oauth_redirect_uri;
 import static com.sh.ytb.common.properties.OAuthProperties.oauth_request_scopes;
 import static com.sh.ytb.common.properties.OAuthProperties.oauth_secret_file;
 import static com.sh.ytb.common.properties.OAuthProperties.oauth_token_expiration_time_millis;
@@ -35,7 +34,6 @@ public class GoogleOAuthHelper implements OAuthAdapter {
   private final Long id = 3001L;
 
   /**
-   *
    * <p>구글로부터 사용자의 자격 증명(credential)을 인가 받기 위한 {@link GoogleAuthorizationCodeFlow} 객체 생성
    *
    * @return 생성된 {@link GoogleAuthorizationCodeFlow} 객체
@@ -99,7 +97,7 @@ public class GoogleOAuthHelper implements OAuthAdapter {
     return
         this.generateAuthorizationFlow()
             .newTokenRequest(code)
-            .setRedirectUri(oauth_redirect_uri)
+            .setRedirectUri(oauth_callback_uri)
             .execute();
   }
 

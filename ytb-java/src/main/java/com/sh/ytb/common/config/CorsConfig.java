@@ -8,9 +8,8 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 
 @Configuration
-public class WebConfig implements CorsConfigurationSource {
+public class CorsConfig implements CorsConfigurationSource {
 
-  /* FIXME: 프로덕션 전에 다 열어논거 막기, 필요하다면 프로퍼티화 */
   @Nonnull
   @Override
   public CorsConfiguration getCorsConfiguration(@Nonnull HttpServletRequest request) {

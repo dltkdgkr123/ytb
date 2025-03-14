@@ -5,7 +5,7 @@ import com.sh.ytb.common.properties.secret.SessionProperties;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
+import java.util.Arrays;
 import java.util.Optional;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -14,17 +14,27 @@ public class CustomSessionCookieUtils implements SessionCookieUtils {
 
   private final SessionProperties sessionProperties;
 
-  CustomSessionCookieUtils(SessionProperties sessionProperties) {
+  public CustomSessionCookieUtils(SessionProperties sessionProperties) {
     this.sessionProperties = sessionProperties;
   }
 
   public void addCookie(HttpServletResponse response, Cookie cookie) {
 
     /* .currentRequestAttributes(): 스레드에 바운드 된 속성 없으면 throw IllegalStateException(null 처리 불필요)*/
-    Optional.of(
+    Optional.ofNullable(
             ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getResponse())
         .orElseThrow(() -> new IllegalStateException("Response is null"))
         .addCookie(cookie);
+  }
+
+  @Override
+  public Optional<Cookie> getCookie(HttpServletRequest request, String name) {
+
+    return
+        Optional.ofNullable(request.getCookies())
+            .flatMap(cookies -> Arrays.stream(cookies)
+                .filter(cookie -> name.equals(cookie.getName()))
+                .findFirst()); // return empty optional if no cookie found
   }
 
   public Cookie makeCookie(String name, String value, int expiryTimeSecs) {
@@ -46,13 +56,13 @@ public class CustomSessionCookieUtils implements SessionCookieUtils {
     return cookie;
   }
 
-  public Cookie makeSessionIdCookie(String sessionId) {
-
-    return makeCookie(sessionProperties.getSessionId(), sessionId, 1800);
+  @Override
+  public Optional<Cookie> getSessionIdCookie(HttpServletRequest request) {
+    return this.getCookie(request, sessionProperties.getSessionId());
   }
 
-  @Override
-  public HttpSession getSession(HttpServletRequest request) {
-    return null;
+  public Cookie makeSessionIdCookie(String sessionId) {
+    return this.makeCookie(sessionProperties.getSessionId(), sessionProperties.getSessionId(),
+        1800);
   }
 }

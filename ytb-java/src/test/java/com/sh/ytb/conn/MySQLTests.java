@@ -1,4 +1,4 @@
-package com.sh.ytb.module;
+package com.sh.ytb.conn;
 
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -18,7 +18,7 @@ class MySQLTests {
   private DataSource dataSource;
 
   @Test
-  public void testConnection() throws SQLException {
+  void testConnection() throws SQLException {
 
     assertDoesNotThrow(() -> Exception.class);
     assertNotNull(dataSource.getConnection());

@@ -1,19 +1,16 @@
 package com.sh.ytb.module;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.sh.ytb.app.dto.req.UserSignInReqDTO;
-import com.sh.ytb.app.dto.res.UserSignInResDTO;
+import com.sh.ytb.app.service.UserService;
 import com.sh.ytb.common.exception.PasswordNotMatchException;
 import com.sh.ytb.common.exception.UserNotExistException;
-import com.sh.ytb.app.service.UserService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.jdbc.Sql;
 
@@ -21,13 +18,10 @@ import org.springframework.test.context.jdbc.Sql;
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @TestPropertySource(locations = "file:src/main/resources/application.properties")
 @Sql("/UserTest.sql")
-class UserTests {
+class UserServiceTests {
 
   @Autowired
   private UserService userService;
-
-  @Autowired
-  private PasswordEncoder passwordEncoder;
 
   @Test
   void signIn_shouldSucceed_whenUserInfoMatched() {
@@ -39,10 +33,10 @@ class UserTests {
         .build();
 
     // When
-    UserSignInResDTO response = userService.userSignIn(userSignInReqDTO);
+    userService.userSignIn(userSignInReqDTO);
 
     // Then
-    assertNotNull(response);
+    assertDoesNotThrow(() -> PasswordNotMatchException.class);
   }
 
   @Test
@@ -55,9 +49,9 @@ class UserTests {
         .build();
 
     // When & Then
-    assertThrows(PasswordNotMatchException.class, () -> {
-      userService.userSignIn(userSignInReqDTO);
-    });
+    assertThrows(PasswordNotMatchException.class,
+        () -> userService.userSignIn(userSignInReqDTO)
+    );
   }
 
   @Test
@@ -70,8 +64,8 @@ class UserTests {
         .build();
 
     // When & Then
-    assertThrows(UserNotExistException.class, () -> {
-      userService.userSignIn(userSignInReqDTO);
-    });
+    assertThrows(UserNotExistException.class,
+        () -> userService.userSignIn(userSignInReqDTO)
+    );
   }
 }

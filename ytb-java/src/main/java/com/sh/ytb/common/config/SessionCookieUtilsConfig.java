@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @RequiredArgsConstructor
-public class SessionCookieConfig {
+public class SessionCookieUtilsConfig {
 
   private final SessionProperties sessionProperties;
 
