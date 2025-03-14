@@ -1,0 +1,16 @@
+
+-- Subscribe MVP --
+
+트랜잭션, 성능 개선 고려x
+
+한 것
+
+사용자 요청 -> 인증플로우 생성 요청(google) -> apiKey, client_secret.json 확인 ->
+인증플로우 생성 -> 인증 uri 제공 -> 사용자 인증 완료 ->
+StoredCredential 바이너리 파일 저장 -> StoredCredential 중간 객체 변환 -> Credential 객체 변환 ->
+Subscribe 조회 요청(youtube) -> Subscribe 목록 반환 -> Subscribe DTO 맵핑 ->
+
+할 것
+Subscribe Entity 변환 -> DB 저장 -> 프론트 반환 -> 사용자가 제거 및 추가할 Subscribe 지정
+-> DB Subscribe 조회 -> DB Subscribe, 사용자 Subscribe 병합 -> DB 저장 -> 안본 영상 요청(youtube)
+-> Video Entity 변환 -> DB 저장 -> PlayList 생성 요청(youtube)

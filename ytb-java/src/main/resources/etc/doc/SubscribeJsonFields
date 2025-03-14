@@ -1,0 +1,12 @@
+etag: 리소스의 고유 식별자, 해당 구독 항목의 최신 상태를 추적
+id: 구독 항목을 고유하게 식별하는 값
+kind: 항목의 유형, 이 경우 YouTube의 구독 항목을 나타냄
+snippet.channelId: 구독한 채널의 고유 식별자
+snippet.description: 채널의 설명, 해당 채널의 콘텐츠 설명
+snippet.publishedAt: 채널 구독이 시작된 날짜 및 시간
+snippet.resourceId.channelId: 관련된 리소스의 채널 ID, 구독의 리소스에 해당하는 채널의 ID
+snippet.resourceId.kind: 리소스 유형, 여기서는 YouTube 채널을 나타냄
+snippet.thumbnails.default.url: 채널의 기본 썸네일 이미지 URL
+snippet.thumbnails.high.url: 채널의 고화질 썸네일 이미지 URL
+snippet.thumbnails.medium.url: 채널의 중간 해상도 썸네일 이미지 URL
+snippet.title: 채널의 제목, 구독한 채널의 이름
